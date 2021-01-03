@@ -83,7 +83,7 @@ struct SettingsListView: View {
                     } //GROUPBOX
                 }
                 
-                GroupBox(label: SettingsLabelView(labelText: "Feed me coffee", labelImage: "heart.circle.fill")) {
+                GroupBox(label: SettingsLabelView(labelText: "Coffee Tip", labelImage: "heart.circle.fill")) {
                     Divider().padding(.vertical, 4)
                     SettingsDescriptionView(text: "This app was built in my spare time, powered by coffee. This one off donation goes directly to my coffee intake.")
                     
@@ -140,6 +140,13 @@ struct SettingsListView: View {
                     NavigationLink(destination: TermsAndConditionsView()) {
                         SettingsRowView(content: "Terms & Conditions", symbol: "chevron.right")
                     }
+                } //GROUPBOX
+                
+                GroupBox(label: SettingsLabelView(labelText: "Version", labelImage: "gearshape.fill")) {
+                    
+                    Divider().padding(.vertical, 4)
+
+                    SettingsDescriptionView(text: "Version 1.1")
                 } //GROUPBOX
                 
 //                GroupBox(label: SettingsLabelView(labelText: "Beta Testing Settings", labelImage: "gearshape.2")) {
