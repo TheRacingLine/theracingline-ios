@@ -10,8 +10,7 @@ import SwiftUI
 struct ConfigureSeries: View {
     
     @ObservedObject var data = DataController.shared
-
-
+    
     var body: some View {
         
         List {
@@ -48,7 +47,7 @@ struct ConfigureSeries: View {
     } // BODY
     
     func getSeriesAccessLevel(seriesName: String) -> Int {
-        
+
         let seriesSessions = data.sessions.filter {$0.series == seriesName }
         
         if seriesSessions.count == 0 {

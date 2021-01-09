@@ -13,17 +13,8 @@ struct AllRacesView: View {
     @StateObject var storeManager: StoreManager
 
     var body: some View {
-        VStack {
-            SessionListView(storeManager: storeManager, sessions: data.allSessions, noSessionText: "No Sessions")
-                .navigationTitle("All Races")
-            if data.userAccessLevel < 1 {
-                Spacer()
-                AdView(advert: data.selectedAd)
-                    .onAppear(){
-                        data.randomlySelectAd()
-                    }
-            }
-        }
+        SessionListView(storeManager: storeManager, sessions: data.allSessions, noSessionText: "No Sessions")
+            .navigationTitle("All Races")
     }
 }
 

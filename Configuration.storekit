@@ -1,0 +1,81 @@
+{
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "1DC435AD",
+      "localizations" : [
+        {
+          "description" : "Goes direct to coffee consumption",
+          "displayName" : "Coffee Tip",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "dev.daveellis.theracingline.coffee",
+      "referenceName" : "Coffee",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "6D796E4E",
+      "localizations" : [
+
+      ],
+      "name" : "SubscriptionLevels",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "2.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "FAF2EA67",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "All Series Dates, Times & Notifications",
+              "displayName" : "TRL Monthly Subscription",
+              "locale" : "en_GB"
+            }
+          ],
+          "productID" : "dev.daveellis.theracingline.gold",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Monthly Subscription",
+          "subscriptionGroupID" : "6D796E4E",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "29.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "8556E161",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "All Series Dates, Times & Notifications",
+              "displayName" : "TRL Annual Subscription",
+              "locale" : "en_GB"
+            }
+          ],
+          "productID" : "dev.daveellis.theracingline.annual",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "Annual Subscription",
+          "subscriptionGroupID" : "6D796E4E",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 0
+  }
+}

@@ -17,7 +17,7 @@ struct SessionListView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
+            LazyVStack {
                 if sessions.count == 0{
                     Image(systemName: "xmark.circle.fill").resizable()
                         .frame(width: 50.0, height: 50)

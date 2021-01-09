@@ -15,6 +15,8 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
     
     @ObservedObject var data = DataController.shared
     @ObservedObject var notificatons = NotificationController.shared
+    @Published var monthlySub = false
+    @Published var annualSub = false
 
     //FETCH PRODUCTS
     var request: SKProductsRequest!
@@ -32,6 +34,7 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
         print("Did receive response")
         
         if !response.products.isEmpty {
+            print(response.products.count)
             for fetchedProduct in response.products {
                 print("IAP Found")
                 print(fetchedProduct.localizedTitle)
@@ -40,7 +43,7 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
                 }
             }
         }
-        
+        print(response.invalidProductIdentifiers.count)
         for invalidIdentifier in response.invalidProductIdentifiers {
             print("Invalid identifiers found: \(invalidIdentifier)")
         }
@@ -99,10 +102,21 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
         switch productIdentifier {
         case "dev.daveellis.theracingline.bronze":
             self.data.setUserAccessLevel(newAccessLevel: 1)
+            self.annualSub = false
+            self.monthlySub = false
         case "dev.daveellis.theracingline.silver":
             self.data.setUserAccessLevel(newAccessLevel: 2)
+            self.annualSub = false
+            self.monthlySub = false
         case "dev.daveellis.theracingline.gold":
             self.data.setUserAccessLevel(newAccessLevel: 3)
+            self.annualSub = false
+            self.monthlySub = true
+            self.notificatons.requestPermission()
+        case "dev.daveellis.theracingline.annual":
+            self.data.setUserAccessLevel(newAccessLevel: 3)
+            self.annualSub = true
+            self.monthlySub = false
             self.notificatons.requestPermission()
         case "dev.daveellis.theracingline.coffee":
                 print("Coffee purchased")
@@ -118,20 +132,38 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
             } else {
             // do your stuff with the receipt data here
                 if let receipt = try? InAppReceipt.localReceipt(){
-                    if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.gold", forDate: Date()) {
+                    if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.annual", forDate: Date()) {
                         // user has subscription of the product, which is still active at the specified date
-                        print("Gold Sub Found")
+                        print("Annual Found")
+                        self.annualSub = true
+                        self.monthlySub = false
                         self.data.setUserAccessLevel(newAccessLevel: 3)
+                        
+                    } else if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.gold", forDate: Date()) {
+                        // user has subscription of the product, which is still active at the specified date
+                        print("Monthly Sub Found")
+                        self.monthlySub = true
+                        self.annualSub = false
+                        self.data.setUserAccessLevel(newAccessLevel: 3)
+                        
                     } else if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.silver", forDate: Date()) {
                         // user has subscription of the product, which is still active at the specified date
                         print("Silver Sub Found")
+                        self.annualSub = false
+                        self.monthlySub = false
                         self.data.setUserAccessLevel(newAccessLevel: 2)
+                        
                     } else if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.bronze", forDate: Date()) {
                         // user has subscription of the product, which is still active at the specified date
                         print("Bronze Sub Found")
+                        self.annualSub = false
+                        self.monthlySub = false
                         self.data.setUserAccessLevel(newAccessLevel: 1)
+                        
                     } else {
                         print("No Sub Found")
+                        self.annualSub = false
+                        self.monthlySub = false
                         self.data.userAccessLevel = 0
                     }
                 }
@@ -139,8 +171,6 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
         }
     }
 }
-
-
 
 extension SKProduct {
     var localizedPrice: String {
@@ -150,4 +180,3 @@ extension SKProduct {
         return formatter.string(from: price)!
     }
 }
-

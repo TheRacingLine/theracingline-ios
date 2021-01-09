@@ -18,7 +18,7 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
     var lightR = 0.0
     var lightG = 0.0
     var lightB = 0.0
-    var season = ""
+    var seriesType = ""
     var event = 0
     var circuit = ""
     var sessionName = ""
@@ -27,7 +27,7 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
     var durationType = "L"
     var duration = 1
     var date = Date()
-    var region = ""
+    var tba = false
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -39,7 +39,7 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
         case lightR
         case lightG
         case lightB
-        case season
+        case seriesType
         case event
         case circuit
         case sessionName
@@ -48,11 +48,11 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
         case durationType
         case duration
         case date
-        case region
+        case tba
     }
     
     static func ==(lhs: Session, rhs: Session) -> Bool {
-        return lhs.id == rhs.id && lhs.series == rhs.series && lhs.accessLevel == rhs.accessLevel && lhs.darkR == rhs.darkR && lhs.darkG == rhs.darkG && lhs.darkB == rhs.darkB && lhs.lightR == rhs.lightR && lhs.lightG == rhs.lightG && lhs.lightB == rhs.lightB && lhs.season == rhs.season && lhs.event == rhs.event && lhs.circuit == rhs.circuit && lhs.sessionName == rhs.sessionName && lhs.sessionType == rhs.sessionType && lhs.roundNumber == rhs.roundNumber && lhs.durationType == rhs.durationType && lhs.duration == rhs.duration && lhs.date == rhs.date && lhs.region == rhs.region
+        return lhs.id == rhs.id && lhs.series == rhs.series && lhs.accessLevel == rhs.accessLevel && lhs.darkR == rhs.darkR && lhs.darkG == rhs.darkG && lhs.darkB == rhs.darkB && lhs.lightR == rhs.lightR && lhs.lightG == rhs.lightG && lhs.lightB == rhs.lightB && lhs.event == rhs.event && lhs.circuit == rhs.circuit && lhs.sessionName == rhs.sessionName && lhs.sessionType == rhs.sessionType && lhs.roundNumber == rhs.roundNumber && lhs.durationType == rhs.durationType && lhs.duration == rhs.duration && lhs.date == rhs.date && lhs.seriesType == rhs.seriesType && lhs.tba == rhs.tba
     }
     
     func encode(to encoder: Encoder) throws {
@@ -66,7 +66,7 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
         try container.encode(lightR, forKey: CodingKeys.lightR)
         try container.encode(lightG, forKey: CodingKeys.lightG)
         try container.encode(lightB, forKey: CodingKeys.lightB)
-        try container.encode(season, forKey: CodingKeys.season)
+        try container.encode(seriesType, forKey: CodingKeys.seriesType)
         try container.encode(event, forKey: CodingKeys.event)
         try container.encode(circuit, forKey: CodingKeys.circuit)
         try container.encode(sessionName, forKey: CodingKeys.sessionName)
@@ -75,7 +75,7 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
         try container.encode(durationType, forKey: CodingKeys.durationType)
         try container.encode(duration, forKey: CodingKeys.duration)
         try container.encode(date, forKey: CodingKeys.date)
-        try container.encode(region, forKey: CodingKeys.region)
+        try container.encode(tba, forKey: CodingKeys.tba)
     }
     
     required init(from decoder: Decoder) throws {
@@ -90,7 +90,7 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
         lightR = try values.decode(Double.self, forKey: .lightR)
         lightG = try values.decode(Double.self, forKey: .lightG)
         lightB = try values.decode(Double.self, forKey: .lightB)
-        season = try values.decode(String.self, forKey: .season)
+        seriesType = try values.decode(String.self, forKey: .seriesType)
         event = try values.decode(Int.self, forKey: .event)
         circuit = try values.decode(String.self, forKey: .circuit)
         sessionName = try values.decode(String.self, forKey: .sessionName)
@@ -99,7 +99,7 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
         durationType = try values.decode(String.self, forKey: .durationType)
         duration = try values.decode(Int.self, forKey: .duration)
         date = try values.decode(Date.self, forKey: .date)
-        region = try values.decode(String.self, forKey: .region)
+        tba = try values.decode(Bool.self, forKey: .tba)
     }
     
     init() {
@@ -177,7 +177,7 @@ var testSession1: Session {
     session.lightR = 121.0
     session.lightG = 153.0
     session.lightB = 153.0
-    session.season = "2021"
+    session.seriesType = "Single Seater"
     session.event = 14
     session.circuit = "Istanbul"
     session.sessionName = "Race"
@@ -186,7 +186,7 @@ var testSession1: Session {
     session.durationType = "L"
     session.duration = 58
     session.date = Date() + 3.days
-    session.region = "TUR"
+    session.tba = false
 
     return session
 }
@@ -202,7 +202,7 @@ var testSession2: Session {
     session.lightR = 237.0
     session.lightG = 33.0
     session.lightB = 58.0
-    session.season = "2021"
+    session.seriesType = "Single Seater"
     session.event = 15
     session.circuit = "Bahrain GP"
     session.sessionName = "Race"
@@ -211,7 +211,7 @@ var testSession2: Session {
     session.durationType = "L"
     session.duration = 61
     session.date = Date() + 10.days
-    session.region = "BAR"
+    session.tba = true
 
     return session
 }
@@ -227,7 +227,7 @@ var testSession3: Session {
     session.lightR = 237.0
     session.lightG = 33.0
     session.lightB = 58.0
-    session.season = "2020 - 2021"
+    session.seriesType = "Sportscars"
     session.event = 8
     session.circuit = "Bahrain"
     session.sessionName = "Race"
@@ -236,7 +236,7 @@ var testSession3: Session {
     session.durationType = "T"
     session.duration = 480
     session.date = Date() + 2.days
-    session.region = "BAR"
+    session.tba = false
 
     return session
 }
@@ -252,7 +252,7 @@ var testSession4: Session {
     session.lightR = 237.0
     session.lightG = 33.0
     session.lightB = 58.0
-    session.season = "2020"
+    session.seriesType = "Single Seater"
     session.event = 10
     session.circuit = "Knockhill"
     session.sessionName = "Race"
@@ -261,7 +261,7 @@ var testSession4: Session {
     session.durationType = "L"
     session.duration = 57
     session.date = Date()
-    session.region = "UK"
+    session.tba = false
 
     return session
 }

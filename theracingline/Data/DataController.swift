@@ -13,7 +13,7 @@ class DataController: ObservableObject {
 
     static var shared = DataController()
     
-    var ads: [Ad] = []
+//    var ads: [Ad] = []
     
     @Published var sessions: [Session] = []
     @Published var seriesList: [String] = []
@@ -21,7 +21,7 @@ class DataController: ObservableObject {
     @Published var onboarded: Bool = false
     @Published var visibleSeries: [String] = []
     @Published var seriesWithNotifications: [String] = []
-    @Published var selectedAd: Ad = testAd
+//    @Published var selectedAd: Ad = testAd
     @Published var selectAllSeries: Bool = false
     @Published var delesctAllSeries: Bool = false
 //    @Published var notificationOffset1: Int = 0
@@ -37,7 +37,7 @@ class DataController: ObservableObject {
         let today = Date()
         let weekAway = Date() + 7.days
         
-        return sessions.filter { $0.date < weekAway && $0.date >= today && visibleSeries.contains($0.series) }.sorted { $0.date < $1.date }
+        return sessions.filter { $0.date < weekAway && $0.date >= today && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
         
     }
 
@@ -93,11 +93,12 @@ class DataController: ObservableObject {
             request.addValue(key, forHTTPHeaderField: "secret-key")
             URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let webData = data {
+
                     if let json = try? JSONSerialization.jsonObject(with: webData, options: []) as? [[String:String]]{
+
                         var downloadedSessions: [Session] = []
                         
                         for jsonSession in json {
-
                             let session = Session()
                             
                             if let id = jsonSession["id"]{
@@ -136,8 +137,8 @@ class DataController: ObservableObject {
                                 session.lightB = Double(lightB)!
                             }
                             
-                            if let season = jsonSession["season"]{
-                                session.season = season
+                            if let seriesType = jsonSession["seriesType"]{
+                                session.seriesType = seriesType
                             }
                             
                             if let event = jsonSession["event"]{
@@ -175,14 +176,19 @@ class DataController: ObservableObject {
                                 }
                             }
                             
-                            if let region = jsonSession["region"]{
-                                session.region = region
+                            if let tbaString = jsonSession["tba"]{
+                                if tbaString == "true" {
+                                    session.tba = true
+                                } else {
+                                    session.tba = false
+                                }
                             }
                             
                             
                             downloadedSessions.append(session)
                         } // FOR JSONSession
                         DispatchQueue.main.async {
+                            print("Sessions Downloaded")
                             self.sessions = downloadedSessions
                             self.saveData()
                         }
@@ -217,17 +223,24 @@ class DataController: ObservableObject {
                             }
                             
                         }
-                        
-                        
-   
-                        DispatchQueue.main.async {
-                            for seriesName in downloadedSeriesList {
-                                if !self.seriesList.contains(seriesName){
-                                        self.visibleSeries.append(seriesName)
-                                        self.seriesWithNotifications.append(seriesName)
+                        var newSeries: [String]?
+                        for seriesName in downloadedSeriesList {
+                            if !self.seriesList.contains(seriesName){
+                                if newSeries == nil {
+                                    newSeries = [seriesName]
+                                } else {
+                                    newSeries?.append(seriesName)
                                 }
                             }
-                            print("Series Downloaded")
+                        }
+   
+                        DispatchQueue.main.async {
+                            
+                            if newSeries != nil {
+                                self.visibleSeries.append(contentsOf: newSeries!)
+                                self.seriesWithNotifications.append(contentsOf: newSeries!)
+                            }
+
                             self.seriesList = downloadedSeriesList
                             self.saveSeriesData()
                         }
@@ -422,91 +435,91 @@ class DataController: ObservableObject {
     // MARK: - Ad controller
     
     // save ads
-    func saveAdData() {
-        DispatchQueue.global().async {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(self.ads) {
-                UserDefaults.standard.set(encoded, forKey: "ads")
-                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
-            }
-        }
-    }
+//    func saveAdData() {
+//        DispatchQueue.global().async {
+//            let encoder = JSONEncoder()
+//            if let encoded = try? encoder.encode(self.ads) {
+//                UserDefaults.standard.set(encoded, forKey: "ads")
+//                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
+//            }
+//        }
+//    }
     
     // load ads
 
-    func loadAdData() {
-        DispatchQueue.global().async {
-            if let data = UserDefaults.standard.data(forKey: "ads"){
-                let decoder = JSONDecoder()
-                if let jsonAds = try? decoder.decode([Ad].self, from: data) {
-                    DispatchQueue.main.async{
-                        self.ads = jsonAds
-                    }
-                }
-            }
-        }
-    }
+//    func loadAdData() {
+//        DispatchQueue.global().async {
+//            if let data = UserDefaults.standard.data(forKey: "ads"){
+//                let decoder = JSONDecoder()
+//                if let jsonAds = try? decoder.decode([Ad].self, from: data) {
+//                    DispatchQueue.main.async{
+//                        self.ads = jsonAds
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     // download ads
     
-    func getAdList() {
-        if self.userAccessLevel == 0 {
-            let key = jsonbinsKey
-            if let url = URL(string: adsURL){
-                var request = URLRequest(url: url)
-                request.addValue(key, forHTTPHeaderField: "secret-key")
-                
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if let webData = data {
-                        if let json = try? JSONSerialization.jsonObject(with: webData, options: []) as? [[String:String]]{
-                            var downloadedAds: [Ad] = []
-                            
-                            for jsonAd in json {
-                                
-                                let ad = Ad()
-                                
-                                if let id = jsonAd["id"] {
-                                    ad.id = id
-                                }
-                                
-                                if let title = jsonAd["title"] {
-                                    ad.title = title
-                                }
-                                
-                                if let subtitle = jsonAd["subtitle"] {
-                                    ad.subtitle = subtitle
-                                }
-                                
-                                if let link = jsonAd["link"]{
-                                    ad.link = link
-                                }
-                                
-                                downloadedAds.append(ad)
-                                
-                            }
-                            
-                            DispatchQueue.main.async {
-                                self.ads = downloadedAds
-                                self.saveAdData()
-                                self.randomlySelectAd()
-                            }
-                        }
-                    }
-                }.resume()
-            }
-        }
-    }
+//    func getAdList() {
+//        if self.userAccessLevel == 0 {
+//            let key = jsonbinsKey
+//            if let url = URL(string: adsURL){
+//                var request = URLRequest(url: url)
+//                request.addValue(key, forHTTPHeaderField: "secret-key")
+//
+//                URLSession.shared.dataTask(with: request) { (data, response, error) in
+//                    if let webData = data {
+//                        if let json = try? JSONSerialization.jsonObject(with: webData, options: []) as? [[String:String]]{
+//                            var downloadedAds: [Ad] = []
+//
+//                            for jsonAd in json {
+//
+//                                let ad = Ad()
+//
+//                                if let id = jsonAd["id"] {
+//                                    ad.id = id
+//                                }
+//
+//                                if let title = jsonAd["title"] {
+//                                    ad.title = title
+//                                }
+//
+//                                if let subtitle = jsonAd["subtitle"] {
+//                                    ad.subtitle = subtitle
+//                                }
+//
+//                                if let link = jsonAd["link"]{
+//                                    ad.link = link
+//                                }
+//
+//                                downloadedAds.append(ad)
+//
+//                            }
+//
+//                            DispatchQueue.main.async {
+//                                self.ads = downloadedAds
+//                                self.saveAdData()
+//                                self.randomlySelectAd()
+//                            }
+//                        }
+//                    }
+//                }.resume()
+//            }
+//        }
+//    }
     
     
     // randomly pick an ad
     
-    func randomlySelectAd() {
-        let max = ads.count
-        if max > 0 {
-            let randomInt = Int.random(in: 0..<max)
-            selectedAd = ads[randomInt]
-        }
-    }
+//    func randomlySelectAd() {
+//        let max = ads.count
+//        if max > 0 {
+//            let randomInt = Int.random(in: 0..<max)
+//            selectedAd = ads[randomInt]
+//        }
+//    }
     
     // MARK: - Haptic Controller
     

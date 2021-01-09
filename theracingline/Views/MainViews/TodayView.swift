@@ -13,17 +13,8 @@ struct TodayView: View {
     @StateObject var storeManager: StoreManager
 
     var body: some View {
-        VStack{
-            SessionListView(storeManager: storeManager, sessions: data.todaysSessions, noSessionText: "No sessions today")
-                .navigationTitle("Today")
-            if data.userAccessLevel < 1 {
-                Spacer()
-                AdView(advert: data.selectedAd)
-                    .onAppear(){
-                        data.randomlySelectAd()
-                    }
-            }
-        }
+        SessionListView(storeManager: storeManager, sessions: data.todaysSessions, noSessionText: "No sessions today")
+            .navigationTitle("Today")
     }
 }
 

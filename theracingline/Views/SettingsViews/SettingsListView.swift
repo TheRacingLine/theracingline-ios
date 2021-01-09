@@ -83,6 +83,14 @@ struct SettingsListView: View {
                     } //GROUPBOX
                 }
                 
+                GroupBox(label: SettingsLabelView(labelText: "FAQs", labelImage: "questionmark.circle")) {
+                    Divider().padding(.vertical, 4)
+                    
+                    NavigationLink(destination: FAQView()) {
+                        SettingsRowView(content: "You have questions, I have answers", symbol: "chevron.right")
+                    }
+                } //GROUPBOX
+                
                 GroupBox(label: SettingsLabelView(labelText: "Coffee Tip", labelImage: "heart.circle.fill")) {
                     Divider().padding(.vertical, 4)
                     SettingsDescriptionView(text: "This app was built in my spare time, powered by coffee. This one off donation goes directly to my coffee intake.")

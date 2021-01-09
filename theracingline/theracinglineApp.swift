@@ -14,7 +14,8 @@ struct theracinglineApp: App {
     let productIDs = ["dev.daveellis.theracingline.coffee",
                       "dev.daveellis.theracingline.bronze",
                       "dev.daveellis.theracingline.silver",
-                      "dev.daveellis.theracingline.gold"]
+                      "dev.daveellis.theracingline.gold",
+                      "dev.daveellis.theracingline.annual"]
 
     @StateObject var storeManager = StoreManager()
     
@@ -73,9 +74,6 @@ struct theracinglineApp: App {
         // load notification offset preferences
         notifications.loadNotificationTime(notificationNumber: 1)
         
-        // load ad data stored on the device
-        data.loadAdData()
-        
         // download new data //
 
         // download new series list
@@ -83,9 +81,6 @@ struct theracinglineApp: App {
         
         // download new session list
         data.getNewSessions()
-        
-        // download new ad list
-        data.getAdList()
         
         // setup visible series list
         data.initiliseVisibleSeries()
@@ -104,11 +99,7 @@ struct theracinglineApp: App {
         // download new session list
         data.getNewSessions()
         
-        // download new ad list
-        data.getAdList()
-        
         // get subscription status
         storeManager.restoreSubscriptionStatus()
-
     }
 }

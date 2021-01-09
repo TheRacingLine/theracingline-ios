@@ -58,7 +58,11 @@ struct SessionRowView: View {
                     if data.userAccessLevel < 3 {
                         Text("\(session.dateAsString())")
                     } else {
-                        Text("\(session.dateAsString()) - \(session.timeAsString())")
+                        if session.tba {
+                            Text("\(session.dateAsString()) - Start Time TBA")
+                        } else {
+                            Text("\(session.dateAsString()) - \(session.timeAsString())")
+                        }
                     }
                     Spacer()
                     if data.userAccessLevel >= 3 {

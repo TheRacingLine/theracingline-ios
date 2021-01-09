@@ -13,17 +13,8 @@ struct ThisWeekView: View {
     @StateObject var storeManager: StoreManager
 
     var body: some View {
-        VStack {
-            SessionListView(storeManager: storeManager, sessions: data.thisWeekSessions, noSessionText: "No sessions this week")
-                .navigationTitle("This Week")
-            if data.userAccessLevel < 1 {
-                Spacer()
-                AdView(advert: data.selectedAd)
-                    .onAppear(){
-                        data.randomlySelectAd()
-                    }
-            }
-        }
+        SessionListView(storeManager: storeManager, sessions: data.thisWeekSessions, noSessionText: "No sessions this week")
+            .navigationTitle("This Week")
     }
 }
 

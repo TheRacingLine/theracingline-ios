@@ -16,35 +16,34 @@ struct SeriesListView: View {
     var noSeriesText: String
     
     var body: some View {
-//        ScrollView {
-            List {
-                if seriesList.count == 0 {
-                    Text(noSeriesText)
-                        .bold()
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 50)
-                        .padding(.horizontal, 20)
-                } else {
-                    
-                    ForEach(seriesList, id: \.self) { seriesName in
-                        let seriesAllSessions = seriesSessions(seriesName: seriesName, sessionsList: sessions)
-                        if seriesAllSessions.count > 0 {
-                            NavigationLink(destination: SeriesSessionListView(sessions: seriesAllSessions, noSessionText: "No Sessions")) {
-                                SeriesRowView(seriesSessions: seriesAllSessions)
-                            }
-                        }
-                    } // FOREACH
-                    
-                    if data.visibleSeries.count == 0 {
-                        HStack{
-                            Spacer()
-                            Text("No Visible Series. Check The Settings.")
-                            Spacer()
+        
+        List {
+            if seriesList.count == 0 {
+                Text(noSeriesText)
+                    .bold()
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 50)
+                    .padding(.horizontal, 20)
+            } else {
+                
+                ForEach(seriesList, id: \.self) { seriesName in
+                    let seriesAllSessions = seriesSessions(seriesName: seriesName, sessionsList: sessions)
+                    if seriesAllSessions.count > 0 {
+                        NavigationLink(destination: SeriesSessionListView(sessions: seriesAllSessions, noSessionText: "No Sessions")) {
+                            SeriesRowView(seriesSessions: seriesAllSessions)
                         }
                     }
-                } // IFELSE
-            } // VSTACK
-//        } // SCROLLVIEW
+                } // FOREACH
+                
+                if data.visibleSeries.count == 0 {
+                    HStack{
+                        Spacer()
+                        Text("No Visible Series. Check The Settings.")
+                        Spacer()
+                    }
+                }
+            } // IFELSE
+        } // LIST
     } // BODY
     
     func seriesSessions(seriesName: String, sessionsList: [Session]) -> [Session] {

@@ -15,31 +15,29 @@ struct CoffeeView: View {
 
 
     var body: some View {
-        ScrollView {
-            VStack{
-                GroupBox(label: SettingsLabelView(labelText: "Coffee Tip", labelImage: "heart.circle.fill")){
-                    Divider().padding(.vertical, 4)
-                    SettingsDescriptionView(text: "This app is created by a single developer, powered purely by coffee and a love of motorsport. This one-off tip will go straight to my coffee intake.")
-                    Divider().padding(.vertical, 4)
-                    
-                    let coffee = self.getSubLevel(subLevel: "coffee")
-                    Button(action: {
-                        if Reachability.isConnectedToNetwork() {
-                            storeManager.purchaseProduct(product: coffee)
-                        } else {
-                            self.showingAlert = true
-                        }
-                    }) {
-                        Text("One-Off Tip - \(coffee.localizedPrice)")
+        VStack{
+            GroupBox(label: SettingsLabelView(labelText: "Coffee Tip", labelImage: "heart.circle.fill")){
+                Divider().padding(.vertical, 4)
+                SettingsDescriptionView(text: "This app is created by a single developer, powered purely by coffee and a love of motorsport. This one-off tip will go straight to my coffee intake.")
+                Divider().padding(.vertical, 4)
+                
+                let coffee = self.getSubLevel(subLevel: "coffee")
+                Button(action: {
+                    if Reachability.isConnectedToNetwork() {
+                        storeManager.purchaseProduct(product: coffee)
+                    } else {
+                        self.showingAlert = true
                     }
-                    .foregroundColor(.blue)
-                    .alert(isPresented: $showingAlert) {
-                        Alert(title: Text("Requires Internet Connection"), message: Text("Subscribing requires an internet connection. Please ensure you are online, and that the app has access to the Wifi or Mobile/Cellular data connection and try again."), dismissButton: .default(Text("Ok")))
-                    }
+                }) {
+                    Text("One-Off Tip - \(coffee.localizedPrice)")
                 }
-                Spacer()
-            } // VSTACK
-        } // SCROLLVIEW
+                .foregroundColor(.blue)
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text("Requires Internet Connection"), message: Text("Subscribing requires an internet connection. Please ensure you are online, and that the app has access to the Wifi or Mobile/Cellular data connection and try again."), dismissButton: .default(Text("Ok")))
+                }
+            }
+            Spacer()
+        } // VSTACK
         .padding(.horizontal, 20)
         .navigationBarTitle("Feed me coffee")
     }
