@@ -36,9 +36,15 @@ struct SeriesRowView: View {
                             .font(.caption)
                             .foregroundColor(Color.secondary)
                     } else {
-                        Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - \(seriesSessions[0].duration) Laps")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
+                        if seriesSessions[0].duration == 0 {
+                            Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - TBA Distance")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        } else {
+                            Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - \(seriesSessions[0].duration) Laps")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        }
                     }
                 } else {
                     if data.userAccessLevel < 3 {
@@ -46,9 +52,15 @@ struct SeriesRowView: View {
                             .font(.caption)
                             .foregroundColor(Color.secondary)
                     } else {
-                        Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - \(seriesSessions[0].getDurationText())")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
+                        if seriesSessions[0].duration == 0 {
+                            Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - TBA Distance")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        } else {
+                            Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - \(seriesSessions[0].getDurationText())")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        }
                     }
                 }
                 HStack{

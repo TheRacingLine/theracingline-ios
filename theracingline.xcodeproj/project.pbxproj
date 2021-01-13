@@ -10,6 +10,8 @@
 		BB02D4F82571B25D003EAD83 /* ConfigurationNotificationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB02D4F72571B25D003EAD83 /* ConfigurationNotificationRowView.swift */; };
 		BB02D4FB257574D5003EAD83 /* ConfigurationSeriesRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB02D4FA257574D5003EAD83 /* ConfigurationSeriesRowView.swift */; };
 		BB02D50025759027003EAD83 /* AdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB02D4FF25759027003EAD83 /* AdView.swift */; };
+		BB217EA325A9E710008B26AF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB217EA225A9E710008B26AF /* MainView.swift */; };
+		BB217EA625A9ED64008B26AF /* theracinglineSideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB217EA525A9ED64008B26AF /* theracinglineSideBarView.swift */; };
 		BB278624256EEE1000B545D8 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB278623256EEE1000B545D8 /* NotificationController.swift */; };
 		BB3741812586BF22008E96E7 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3741802586BF22008E96E7 /* StoreManager.swift */; };
 		BB54CBE125608859008E7F28 /* SettingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB54CBE025608859008E7F28 /* SettingsListView.swift */; };
@@ -63,6 +65,9 @@
 		BB02D4F72571B25D003EAD83 /* ConfigurationNotificationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationNotificationRowView.swift; sourceTree = "<group>"; };
 		BB02D4FA257574D5003EAD83 /* ConfigurationSeriesRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationSeriesRowView.swift; sourceTree = "<group>"; };
 		BB02D4FF25759027003EAD83 /* AdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdView.swift; sourceTree = "<group>"; };
+		BB217EA225A9E710008B26AF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		BB217EA525A9ED64008B26AF /* theracinglineSideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = theracinglineSideBarView.swift; sourceTree = "<group>"; };
+		BB217EA925AA0279008B26AF /* theracingline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = theracingline.entitlements; sourceTree = "<group>"; };
 		BB278623256EEE1000B545D8 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		BB3741802586BF22008E96E7 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		BB54CBE025608859008E7F28 /* SettingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListView.swift; sourceTree = "<group>"; };
@@ -232,7 +237,10 @@
 		BBD3A29D255DD1FB005C19BB /* theracingline */ = {
 			isa = PBXGroup;
 			children = (
+				BB217EA925AA0279008B26AF /* theracingline.entitlements */,
 				BBD3A29E255DD1FB005C19BB /* theracinglineApp.swift */,
+				BB217EA225A9E710008B26AF /* MainView.swift */,
+				BB217EA525A9ED64008B26AF /* theracinglineSideBarView.swift */,
 				BB8C9DD9256DBB5600D79892 /* theracinglineOnboarding.swift */,
 				BBD3A2A0255DD1FB005C19BB /* theracinglineHomeView.swift */,
 				BBD3A2BC255DE321005C19BB /* Views */,
@@ -414,6 +422,7 @@
 				BB278624256EEE1000B545D8 /* NotificationController.swift in Sources */,
 				BB54CBE125608859008E7F28 /* SettingsListView.swift in Sources */,
 				BB8C9DD4256D9CC600D79892 /* MoreSeriesButton.swift in Sources */,
+				BB217EA325A9E710008B26AF /* MainView.swift in Sources */,
 				BBD3A2C2255DE5E0005C19BB /* SessionListView.swift in Sources */,
 				BBD3A2B5255DDA03005C19BB /* DataController.swift in Sources */,
 				BB54CBF925617AEC008E7F28 /* SubscriptionLevelList.swift in Sources */,
@@ -428,6 +437,7 @@
 				BBD3A2C9255DFE0F005C19BB /* ThisWeekView.swift in Sources */,
 				BBD3A29F255DD1FB005C19BB /* theracinglineApp.swift in Sources */,
 				BBD3A2BE255DE377005C19BB /* TodayView.swift in Sources */,
+				BB217EA625A9ED64008B26AF /* theracinglineSideBarView.swift in Sources */,
 				BB54CC0E256180FA008E7F28 /* TermsAndConditionsView.swift in Sources */,
 				BB6FD1A925A20193004F261D /* Keys.swift in Sources */,
 				BB54CC0825618077008E7F28 /* CoffeeView.swift in Sources */,
@@ -567,6 +577,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = theracingline/theracingline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"theracingline/Preview Content\"";
@@ -581,6 +592,7 @@
 				MARKETING_VERSION = 1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -591,6 +603,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = theracingline/theracingline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"theracingline/Preview Content\"";
@@ -605,6 +618,7 @@
 				MARKETING_VERSION = 1.21;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

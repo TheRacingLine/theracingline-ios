@@ -36,9 +36,15 @@ struct SeriesSessionRowView: View {
                             .font(.caption)
                             .foregroundColor(Color.secondary)
                     } else {
-                        Text("\(session.sessionName) - \(session.duration) Laps")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
+                        if session.duration == 0 {
+                            Text("\(session.sessionName) - TBA Distance")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        } else {
+                            Text("\(session.sessionName) - \(session.duration) Laps")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        }
                     }
                 } else {
                     if data.userAccessLevel < 3 {
@@ -46,9 +52,15 @@ struct SeriesSessionRowView: View {
                             .font(.caption)
                             .foregroundColor(Color.secondary)
                     } else {
-                        Text("\(session.sessionName) - \(session.getDurationText())")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
+                        if session.duration == 0 {
+                            Text("\(session.sessionName) - TBA Distance")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        } else {
+                            Text("\(session.sessionName) - \(session.getDurationText())")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        }
                     }
                 }
                 HStack{

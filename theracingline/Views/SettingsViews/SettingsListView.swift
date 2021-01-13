@@ -154,7 +154,7 @@ struct SettingsListView: View {
                     
                     Divider().padding(.vertical, 4)
 
-                    SettingsDescriptionView(text: "Version 1.1")
+                    SettingsDescriptionView(text: "Version 1.2", useBlack: true)
                 } //GROUPBOX
                 
 //                GroupBox(label: SettingsLabelView(labelText: "Beta Testing Settings", labelImage: "gearshape.2")) {

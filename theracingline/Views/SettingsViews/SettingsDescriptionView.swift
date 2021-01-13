@@ -10,12 +10,25 @@ import SwiftUI
 struct SettingsDescriptionView: View {
     
     var text: String
+    var useBlack: Bool?
+    
     var body: some View {
-        HStack(alignment: .center, spacing: 5) {
-            Text(text)
-                .lineLimit(nil)
-                .font(.footnote)
-            Spacer()
+        
+        if useBlack != nil {
+            HStack(alignment: .center, spacing: 5) {
+                Text(text)
+                    .lineLimit(nil)
+                    .font(.footnote)
+                Spacer()
+            }
+        } else {
+            HStack(alignment: .center, spacing: 5) {
+                Text(text)
+                    .lineLimit(nil)
+                    .font(.footnote)
+                    .foregroundColor(Color.gray)
+                Spacer()
+            }
         }
     }
 }

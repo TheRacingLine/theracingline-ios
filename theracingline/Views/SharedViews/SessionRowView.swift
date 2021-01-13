@@ -39,9 +39,15 @@ struct SessionRowView: View {
                             .font(.caption)
                             .foregroundColor(Color.secondary)
                     } else {
-                        Text("\(session.circuit) - \(session.sessionName) - \(session.duration) Laps")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
+                        if session.duration == 0 {
+                            Text("\(session.circuit) - \(session.sessionName) - TBA Distance")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        } else {
+                            Text("\(session.circuit) - \(session.sessionName) - \(session.duration) Laps")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        }
                     }
                 } else {
                     if data.userAccessLevel < 3 {
@@ -49,9 +55,15 @@ struct SessionRowView: View {
                             .font(.caption)
                             .foregroundColor(Color.secondary)
                     } else {
-                        Text("\(session.circuit) - \(session.sessionName) - \(session.getDurationText())")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
+                        if session.duration == 0 {
+                            Text("\(session.circuit) - \(session.sessionName) - TBA Distance")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        } else {
+                            Text("\(session.circuit) - \(session.sessionName) - \(session.getDurationText())")
+                                .font(.caption)
+                                .foregroundColor(Color.secondary)
+                        }
                     }
                 }
                 HStack{

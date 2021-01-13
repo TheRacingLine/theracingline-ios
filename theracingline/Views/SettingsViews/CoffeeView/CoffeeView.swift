@@ -18,7 +18,7 @@ struct CoffeeView: View {
         VStack{
             GroupBox(label: SettingsLabelView(labelText: "Coffee Tip", labelImage: "heart.circle.fill")){
                 Divider().padding(.vertical, 4)
-                SettingsDescriptionView(text: "This app is created by a single developer, powered purely by coffee and a love of motorsport. This one-off tip will go straight to my coffee intake.")
+                SettingsDescriptionView(text: "This app is created by a single developer, powered purely by coffee and a love of motorsport. This one-off tip will go straight to my coffee intake.", useBlack: true)
                 Divider().padding(.vertical, 4)
                 
                 let coffee = self.getSubLevel(subLevel: "coffee")
