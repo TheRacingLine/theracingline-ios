@@ -45,20 +45,22 @@ struct SettingsListView: View {
 
                 GroupBox(label: SettingsLabelView(labelText: "Configure Series", labelImage: "app.badge")) {
                     Divider().padding(.vertical, 4)
-                    SettingsDescriptionView(text: "Select which series you would like to display in your lists and which series you'd like to receive push notifications for.")
-                    
-                    Divider().padding(.vertical, 4)
                     
                     NavigationLink(destination: ConfigureSeries()) {
-                        SettingsRowView(content: "Configure Visible Series", symbol: "chevron.right")
+                        SettingsRowView(content: "Visible Series", symbol: "chevron.right")
                     }
                     
                     if data.userAccessLevel >= 3 {
                         Divider().padding(.vertical, 4)
                         
                         NavigationLink(destination: ConfigureNotificationView()) {
-                            SettingsRowView(content: "Configure Notifications", symbol: "chevron.right")
-                            
+                            SettingsRowView(content: "Notifications", symbol: "chevron.right")
+                        }
+                        
+                        Divider().padding(.vertical, 4)
+                        
+                        NavigationLink(destination: ConfigureSoundsView()) {
+                            SettingsRowView(content: "Sounds", symbol: "chevron.right")
                         }
                     }
                 } //GROUPBOX
@@ -154,7 +156,7 @@ struct SettingsListView: View {
                     
                     Divider().padding(.vertical, 4)
 
-                    SettingsDescriptionView(text: "Version 1.2", useBlack: true)
+                    SettingsDescriptionView(text: "Version 1.22", useBlack: true)
                 } //GROUPBOX
                 
 //                GroupBox(label: SettingsLabelView(labelText: "Beta Testing Settings", labelImage: "gearshape.2")) {

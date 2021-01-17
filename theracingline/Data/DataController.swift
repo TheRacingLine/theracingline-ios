@@ -24,6 +24,7 @@ class DataController: ObservableObject {
 //    @Published var selectedAd: Ad = testAd
     @Published var selectAllSeries: Bool = false
     @Published var delesctAllSeries: Bool = false
+    @Published var notificationSound: String = "flyby_notification_no_bell.aiff"
 //    @Published var notificationOffset1: Int = 0
 //    @Published var notificationOffset2: Int = 0
 
@@ -521,6 +522,32 @@ class DataController: ObservableObject {
 //        }
 //    }
     
+    // MARK:- Sound Data Controllers
+    
+    func setNotificationSound(sound: String) {
+        DispatchQueue.global().async {
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(sound) {
+                UserDefaults.standard.set(encoded, forKey: "notificationSound")
+                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
+                self.getNotificationSound()
+            }
+        }
+    }
+    
+    func getNotificationSound() {
+        DispatchQueue.global().async {
+            if let data = UserDefaults.standard.data(forKey: "notificationSound"){
+                let decoder = JSONDecoder()
+                if let jsonNotificationSound = try? decoder.decode(String.self, from: data) {
+                    DispatchQueue.main.async{
+                        self.notificationSound = jsonNotificationSound
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - Haptic Controller
     
     func menuHaptics() {
@@ -528,3 +555,4 @@ class DataController: ObservableObject {
         generator.notificationOccurred(.success)
     }
 }
+

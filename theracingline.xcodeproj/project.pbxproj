@@ -38,6 +38,12 @@
 		BBBA2D632560578100DC466A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA2D622560578100DC466A /* SettingsView.swift */; };
 		BBBA2D672560589400DC466A /* SettingsLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA2D662560589400DC466A /* SettingsLabelView.swift */; };
 		BBBF5D1F257C1C2F005F50F4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBF5D1E257C1C2E005F50F4 /* Reachability.swift */; };
+		BBBFEE6E25B3B42100B95742 /* notification_3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BBBFEE6925B3B42100B95742 /* notification_3.aiff */; };
+		BBBFEE6F25B3B42100B95742 /* notification_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BBBFEE6A25B3B42100B95742 /* notification_1.aiff */; };
+		BBBFEE7025B3B42100B95742 /* notification_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BBBFEE6B25B3B42100B95742 /* notification_2.aiff */; };
+		BBBFEE7125B3B42100B95742 /* flyby_notification_bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BBBFEE6C25B3B42100B95742 /* flyby_notification_bell.aiff */; };
+		BBBFEE7225B3B42100B95742 /* flyby_notification_no_bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BBBFEE6D25B3B42100B95742 /* flyby_notification_no_bell.aiff */; };
+		BBBFEE7525B4494A00B95742 /* ConfigureSoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBFEE7425B4494A00B95742 /* ConfigureSoundsView.swift */; };
 		BBD3A29F255DD1FB005C19BB /* theracinglineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A29E255DD1FB005C19BB /* theracinglineApp.swift */; };
 		BBD3A2A1255DD1FB005C19BB /* theracinglineHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A2A0255DD1FB005C19BB /* theracinglineHomeView.swift */; };
 		BBD3A2A3255DD1FB005C19BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD3A2A2255DD1FB005C19BB /* Assets.xcassets */; };
@@ -93,6 +99,12 @@
 		BBBA2D622560578100DC466A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		BBBA2D662560589400DC466A /* SettingsLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLabelView.swift; sourceTree = "<group>"; };
 		BBBF5D1E257C1C2E005F50F4 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		BBBFEE6925B3B42100B95742 /* notification_3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = notification_3.aiff; sourceTree = "<group>"; };
+		BBBFEE6A25B3B42100B95742 /* notification_1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = notification_1.aiff; sourceTree = "<group>"; };
+		BBBFEE6B25B3B42100B95742 /* notification_2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = notification_2.aiff; sourceTree = "<group>"; };
+		BBBFEE6C25B3B42100B95742 /* flyby_notification_bell.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = flyby_notification_bell.aiff; sourceTree = "<group>"; };
+		BBBFEE6D25B3B42100B95742 /* flyby_notification_no_bell.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = flyby_notification_no_bell.aiff; sourceTree = "<group>"; };
+		BBBFEE7425B4494A00B95742 /* ConfigureSoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSoundsView.swift; sourceTree = "<group>"; };
 		BBD3A29B255DD1FB005C19BB /* theracingline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = theracingline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD3A29E255DD1FB005C19BB /* theracinglineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = theracinglineApp.swift; sourceTree = "<group>"; };
 		BBD3A2A0255DD1FB005C19BB /* theracinglineHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = theracinglineHomeView.swift; sourceTree = "<group>"; };
@@ -151,6 +163,7 @@
 				BBE68A442579A35E00208B3B /* ConfigureNotificationTimeView.swift */,
 				BB02D4F72571B25D003EAD83 /* ConfigurationNotificationRowView.swift */,
 				BBE68A402579857C00208B3B /* TimePickerView.swift */,
+				BBBFEE7425B4494A00B95742 /* ConfigureSoundsView.swift */,
 			);
 			path = ConfigureViews;
 			sourceTree = "<group>";
@@ -237,6 +250,11 @@
 		BBD3A29D255DD1FB005C19BB /* theracingline */ = {
 			isa = PBXGroup;
 			children = (
+				BBBFEE6C25B3B42100B95742 /* flyby_notification_bell.aiff */,
+				BBBFEE6D25B3B42100B95742 /* flyby_notification_no_bell.aiff */,
+				BBBFEE6A25B3B42100B95742 /* notification_1.aiff */,
+				BBBFEE6B25B3B42100B95742 /* notification_2.aiff */,
+				BBBFEE6925B3B42100B95742 /* notification_3.aiff */,
 				BB217EA925AA0279008B26AF /* theracingline.entitlements */,
 				BBD3A29E255DD1FB005C19BB /* theracinglineApp.swift */,
 				BB217EA225A9E710008B26AF /* MainView.swift */,
@@ -391,7 +409,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBBFEE7025B3B42100B95742 /* notification_2.aiff in Resources */,
+				BBBFEE6E25B3B42100B95742 /* notification_3.aiff in Resources */,
+				BBBFEE7125B3B42100B95742 /* flyby_notification_bell.aiff in Resources */,
 				BBD3A2A6255DD1FB005C19BB /* Preview Assets.xcassets in Resources */,
+				BBBFEE7225B3B42100B95742 /* flyby_notification_no_bell.aiff in Resources */,
+				BBBFEE6F25B3B42100B95742 /* notification_1.aiff in Resources */,
 				BBD3A2A3255DD1FB005C19BB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,6 +471,7 @@
 				BBD3A2D3255E906E005C19BB /* SeriesRowView.swift in Sources */,
 				BB54CC0225617FA0008E7F28 /* CustomiseView.swift in Sources */,
 				BBB275B92578285A0011FB58 /* Ad.swift in Sources */,
+				BBBFEE7525B4494A00B95742 /* ConfigureSoundsView.swift in Sources */,
 				BB54CBE925609588008E7F28 /* BetaTestSettingsView.swift in Sources */,
 				BBE1B82D25A0BA7F00BB9D23 /* FAQView.swift in Sources */,
 			);
@@ -589,7 +613,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.21;
+				MARKETING_VERSION = 1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -615,7 +639,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.21;
+				MARKETING_VERSION = 1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;

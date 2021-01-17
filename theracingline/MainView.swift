@@ -88,6 +88,9 @@ struct MainView: View {
         // load the visibile series preferences stored on the device
         data.getVisibleSeriesPreferences()
         
+        // load notification sounds
+        data.getNotificationSound()
+        
         // load notification offset preferences
         notifications.loadNotificationTime(notificationNumber: 1)
         
@@ -118,6 +121,9 @@ struct MainView: View {
         
         // get subscription status
         storeManager.restoreSubscriptionStatus()
+        
+        // setup notifications
+        data.initiliseNotificationSettings()
 
     }
 }

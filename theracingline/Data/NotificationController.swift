@@ -107,11 +107,11 @@ class NotificationController: ObservableObject {
             content.title = session.series
             content.subtitle = "\(session.circuit) - \(session.sessionName)"
             content.body = messageString
-            content.sound = UNNotificationSound.default
+            content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: data.notificationSound))
             
 //            print(content.title)
 //            print(content.subtitle)
-            print(content.body)
+//            print(content.body)
 
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(secondsUntilNotification), repeats: false)
 

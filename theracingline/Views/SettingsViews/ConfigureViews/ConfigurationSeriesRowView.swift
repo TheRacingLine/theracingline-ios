@@ -30,7 +30,9 @@ struct ConfigurationSeriesRowView: View {
                             while data.visibleSeries.contains(seriesName) {
                                 let index = data.visibleSeries.firstIndex(of: seriesName)
                                 data.visibleSeries.remove(at: index!)
-                                data.seriesWithNotifications.remove(at: index!)
+                                if data.seriesWithNotifications.contains(seriesName) {
+                                    data.seriesWithNotifications.remove(at: index!)
+                                }
                                 print(data.visibleSeries)
                             }
                         }
