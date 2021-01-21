@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BBD3A29A255DD1FB005C19BB"
-               BuildableName = "theracingline.app"
-               BlueprintName = "theracingline"
+               BuildableName = "theracingline-iOS.app"
+               BlueprintName = "theracingline-iOS"
                ReferencedContainer = "container:theracingline.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BBD3A29A255DD1FB005C19BB"
-            BuildableName = "theracingline.app"
-            BlueprintName = "theracingline"
+            BuildableName = "theracingline-iOS.app"
+            BlueprintName = "theracingline-iOS"
             ReferencedContainer = "container:theracingline.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BBD3A29A255DD1FB005C19BB"
-            BuildableName = "theracingline.app"
-            BlueprintName = "theracingline"
+            BuildableName = "theracingline-iOS.app"
+            BlueprintName = "theracingline-iOS"
             ReferencedContainer = "container:theracingline.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

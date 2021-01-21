@@ -62,25 +62,45 @@ class DataController: ObservableObject {
     func saveData() {
         
         DispatchQueue.global().async {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(self.sessions) {
-                UserDefaults.standard.set(encoded, forKey: "sessions")
-                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(self.sessions) {
+                    defaults.set(encoded, forKey: "sessions")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                }
+                
             }
         }
     }
     
     func loadData() {
         DispatchQueue.global().async {
-            if let data = UserDefaults.standard.data(forKey: "sessions"){
-                let decoder = JSONDecoder()
-                if let jsonSessions = try? decoder.decode([Session].self, from: data) {
-                    DispatchQueue.main.async{
-                        self.sessions = jsonSessions
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                if let data = defaults.data(forKey: "sessions"){
+                    let decoder = JSONDecoder()
+                    if let jsonSessions = try? decoder.decode([Session].self, from: data) {
+                        DispatchQueue.main.async{
+                            self.sessions = jsonSessions
+                        }
                     }
                 }
             }
         }
+    }
+    
+    func getTodayForWidget() -> [Session]{
+        if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+            if let data = defaults.data(forKey: "sessions"){
+                let decoder = JSONDecoder()
+                if let jsonSessions = try? decoder.decode([Session].self, from: data) {
+                    return jsonSessions
+                }
+            }
+        }
+        return []
     }
     
     func getNewSessions() {
@@ -254,21 +274,30 @@ class DataController: ObservableObject {
 
     func saveSeriesData() {
         DispatchQueue.global().async {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(self.seriesList) {
-                UserDefaults.standard.set(encoded, forKey: "seriesList")
-                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(self.seriesList) {
+                    defaults.set(encoded, forKey: "seriesList")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                }
             }
+            
         }
     }
 
     func loadSeriesData() {
         DispatchQueue.global().async {
-            if let data = UserDefaults.standard.data(forKey: "seriesList"){
-                let decoder = JSONDecoder()
-                if let jsonSeriesList = try? decoder.decode([String].self, from: data) {
-                    DispatchQueue.main.async{
-                        self.seriesList = jsonSeriesList
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                
+                if let data = defaults.data(forKey: "seriesList"){
+                    let decoder = JSONDecoder()
+                    if let jsonSeriesList = try? decoder.decode([String].self, from: data) {
+                        DispatchQueue.main.async{
+                            self.seriesList = jsonSeriesList
+                        }
                     }
                 }
             }
@@ -279,26 +308,43 @@ class DataController: ObservableObject {
     
     func setUserAccessLevel(newAccessLevel: Int) {
         DispatchQueue.global().async {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(newAccessLevel) {
-                UserDefaults.standard.set(encoded, forKey: "userAccessLevel")
-                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
-                self.getUserAccessLevel()
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(newAccessLevel) {
+                    defaults.set(encoded, forKey: "userAccessLevel")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                    self.getUserAccessLevel()
+                }
             }
+            
         }
     }
     
     func getUserAccessLevel() {
         DispatchQueue.global().async {
-            if let data = UserDefaults.standard.data(forKey: "userAccessLevel"){
-                let decoder = JSONDecoder()
-                if let jsonUserAccessLevel = try? decoder.decode(Int.self, from: data) {
-                    DispatchQueue.main.async{
-                        self.userAccessLevel = jsonUserAccessLevel
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                if let data = defaults.data(forKey: "userAccessLevel"){
+                    let decoder = JSONDecoder()
+                    if let jsonUserAccessLevel = try? decoder.decode(Int.self, from: data) {
+                        DispatchQueue.main.async{
+                            self.userAccessLevel = jsonUserAccessLevel
+                        }
                     }
                 }
             }
         }
+    }
+    
+    func getUserAccessLevelForWidget() -> Int {
+        if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+            if let data = defaults.data(forKey: "userAccessLevel"){
+                let decoder = JSONDecoder()
+                if let jsonUserAccessLevel = try? decoder.decode(Int.self, from: data) {
+                    return jsonUserAccessLevel
+                }
+            }
+        }
+        return 0
     }
     
     
@@ -358,12 +404,11 @@ class DataController: ObservableObject {
         // load each time the array is updated
         // load before building the notification
         DispatchQueue.global().async {
-            if let data = UserDefaults.standard.data(forKey: "notificationPreferences"){
-                let decoder = JSONDecoder()
-                if let jsonSeriesList = try? decoder.decode([String].self, from: data) {
-                    DispatchQueue.main.async{
-                        self.seriesWithNotifications = jsonSeriesList
-                    }
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(self.seriesWithNotifications) {
+                    defaults.set(encoded, forKey: "notificationPreferences")
+                    defaults.synchronize() // MAYBE DO NOT NEED
                 }
             }
         }
@@ -372,11 +417,15 @@ class DataController: ObservableObject {
     func setNotificationPreferences(){
         // run each time the array is updated
         DispatchQueue.global().async {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(self.seriesWithNotifications) {
-                UserDefaults.standard.set(encoded, forKey: "notificationPreferences")
-                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(self.seriesWithNotifications) {
+                    defaults.set(encoded, forKey: "notificationPreferences")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                }
             }
+            
         }
     }
     
@@ -397,11 +446,14 @@ class DataController: ObservableObject {
     func getVisibleSeriesPreferences(){
         // load each time the array is updated
         DispatchQueue.global().async {
-            if let data = UserDefaults.standard.data(forKey: "visibleSeriesPreferences"){
-                let decoder = JSONDecoder()
-                if let jsonSeriesList = try? decoder.decode([String].self, from: data) {
-                    DispatchQueue.main.async{
-                        self.visibleSeries = jsonSeriesList
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                if let data = defaults.data(forKey: "visibleSeriesPreferences"){
+                    let decoder = JSONDecoder()
+                    if let jsonSeriesList = try? decoder.decode([String].self, from: data) {
+                        DispatchQueue.main.async{
+                            self.visibleSeries = jsonSeriesList
+                        }
                     }
                 }
             }
@@ -411,10 +463,14 @@ class DataController: ObservableObject {
     func setVisibleSeriesPreferences(){
         // run each time the array is updated
         DispatchQueue.global().async {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(self.visibleSeries) {
-                UserDefaults.standard.set(encoded, forKey: "visibleSeriesPreferences")
-                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(self.visibleSeries) {
+                    defaults.set(encoded, forKey: "visibleSeriesPreferences")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                }
             }
         }
     }
@@ -526,22 +582,27 @@ class DataController: ObservableObject {
     
     func setNotificationSound(sound: String) {
         DispatchQueue.global().async {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(sound) {
-                UserDefaults.standard.set(encoded, forKey: "notificationSound")
-                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
-                self.getNotificationSound()
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(sound) {
+                    defaults.set(encoded, forKey: "notificationSound")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                    self.getNotificationSound()
+                }
             }
         }
     }
     
     func getNotificationSound() {
         DispatchQueue.global().async {
-            if let data = UserDefaults.standard.data(forKey: "notificationSound"){
-                let decoder = JSONDecoder()
-                if let jsonNotificationSound = try? decoder.decode(String.self, from: data) {
-                    DispatchQueue.main.async{
-                        self.notificationSound = jsonNotificationSound
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                if let data = defaults.data(forKey: "notificationSound"){
+                    let decoder = JSONDecoder()
+                    if let jsonNotificationSound = try? decoder.decode(String.self, from: data) {
+                        DispatchQueue.main.async{
+                            self.notificationSound = jsonNotificationSound
+                        }
                     }
                 }
             }

@@ -44,6 +44,15 @@
 		BBBFEE7125B3B42100B95742 /* flyby_notification_bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BBBFEE6C25B3B42100B95742 /* flyby_notification_bell.aiff */; };
 		BBBFEE7225B3B42100B95742 /* flyby_notification_no_bell.aiff in Resources */ = {isa = PBXBuildFile; fileRef = BBBFEE6D25B3B42100B95742 /* flyby_notification_no_bell.aiff */; };
 		BBBFEE7525B4494A00B95742 /* ConfigureSoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBFEE7425B4494A00B95742 /* ConfigureSoundsView.swift */; };
+		BBBFEE7F25B61A6700B95742 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBFEE7E25B61A6700B95742 /* WidgetKit.framework */; };
+		BBBFEE8125B61A6700B95742 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBFEE8025B61A6700B95742 /* SwiftUI.framework */; };
+		BBBFEE8425B61A6700B95742 /* theracingline_widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBFEE8325B61A6700B95742 /* theracingline_widget.swift */; };
+		BBBFEE8625B61A6800B95742 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBBFEE8525B61A6800B95742 /* Assets.xcassets */; };
+		BBBFEE8A25B61A6800B95742 /* theracingline-widgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BBBFEE7D25B61A6700B95742 /* theracingline-widgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BBBFEE9125B61CA000B95742 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A2B0255DD4E5005C19BB /* Session.swift */; };
+		BBBFEE9425B61D6300B95742 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A2B4255DDA03005C19BB /* DataController.swift */; };
+		BBBFEE9725B61D8C00B95742 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6FD1A825A20193004F261D /* Keys.swift */; };
+		BBBFEE9B25B61DB500B95742 /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = BBBFEE9A25B61DB500B95742 /* SwiftDate */; };
 		BBD3A29F255DD1FB005C19BB /* theracinglineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A29E255DD1FB005C19BB /* theracinglineApp.swift */; };
 		BBD3A2A1255DD1FB005C19BB /* theracinglineHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A2A0255DD1FB005C19BB /* theracinglineHomeView.swift */; };
 		BBD3A2A3255DD1FB005C19BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD3A2A2255DD1FB005C19BB /* Assets.xcassets */; };
@@ -66,6 +75,30 @@
 		BBE68A452579A35E00208B3B /* ConfigureNotificationTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE68A442579A35E00208B3B /* ConfigureNotificationTimeView.swift */; };
 		BBE68A482579A82900208B3B /* ConfigureNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE68A472579A82900208B3B /* ConfigureNotificationView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BBBFEE8825B61A6800B95742 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBD3A293255DD1FB005C19BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBBFEE7C25B61A6700B95742;
+			remoteInfo = "theracingline-widgetExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BBBFEE8E25B61A6800B95742 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BBBFEE8A25B61A6800B95742 /* theracingline-widgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		BB02D4F72571B25D003EAD83 /* ConfigurationNotificationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationNotificationRowView.swift; sourceTree = "<group>"; };
@@ -105,7 +138,14 @@
 		BBBFEE6C25B3B42100B95742 /* flyby_notification_bell.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = flyby_notification_bell.aiff; sourceTree = "<group>"; };
 		BBBFEE6D25B3B42100B95742 /* flyby_notification_no_bell.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = flyby_notification_no_bell.aiff; sourceTree = "<group>"; };
 		BBBFEE7425B4494A00B95742 /* ConfigureSoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSoundsView.swift; sourceTree = "<group>"; };
-		BBD3A29B255DD1FB005C19BB /* theracingline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = theracingline.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBBFEE7D25B61A6700B95742 /* theracingline-widgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "theracingline-widgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBBFEE7E25B61A6700B95742 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		BBBFEE8025B61A6700B95742 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		BBBFEE8325B61A6700B95742 /* theracingline_widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = theracingline_widget.swift; sourceTree = "<group>"; };
+		BBBFEE8525B61A6800B95742 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BBBFEE8725B61A6800B95742 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BBBFEE9E25BA210800B95742 /* theracingline-widgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "theracingline-widgetExtension.entitlements"; sourceTree = "<group>"; };
+		BBD3A29B255DD1FB005C19BB /* theracingline-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "theracingline-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD3A29E255DD1FB005C19BB /* theracinglineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = theracinglineApp.swift; sourceTree = "<group>"; };
 		BBD3A2A0255DD1FB005C19BB /* theracinglineHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = theracinglineHomeView.swift; sourceTree = "<group>"; };
 		BBD3A2A2255DD1FB005C19BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -130,6 +170,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BBBFEE7A25B61A6700B95742 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBBFEE8125B61A6700B95742 /* SwiftUI.framework in Frameworks */,
+				BBBFEE7F25B61A6700B95742 /* WidgetKit.framework in Frameworks */,
+				BBBFEE9B25B61DB500B95742 /* SwiftDate in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBD3A298255DD1FB005C19BB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -206,6 +256,8 @@
 			isa = PBXGroup;
 			children = (
 				BB564A5E25A522C7002311A9 /* StoreKit.framework */,
+				BBBFEE7E25B61A6700B95742 /* WidgetKit.framework */,
+				BBBFEE8025B61A6700B95742 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -230,10 +282,22 @@
 			path = SettingsViews;
 			sourceTree = "<group>";
 		};
+		BBBFEE8225B61A6700B95742 /* theracingline-widget */ = {
+			isa = PBXGroup;
+			children = (
+				BBBFEE8325B61A6700B95742 /* theracingline_widget.swift */,
+				BBBFEE8525B61A6800B95742 /* Assets.xcassets */,
+				BBBFEE8725B61A6800B95742 /* Info.plist */,
+			);
+			path = "theracingline-widget";
+			sourceTree = "<group>";
+		};
 		BBD3A292255DD1FB005C19BB = {
 			isa = PBXGroup;
 			children = (
+				BBBFEE9E25BA210800B95742 /* theracingline-widgetExtension.entitlements */,
 				BBD3A29D255DD1FB005C19BB /* theracingline */,
+				BBBFEE8225B61A6700B95742 /* theracingline-widget */,
 				BBD3A29C255DD1FB005C19BB /* Products */,
 				BB564A5D25A522C7002311A9 /* Frameworks */,
 			);
@@ -242,7 +306,8 @@
 		BBD3A29C255DD1FB005C19BB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BBD3A29B255DD1FB005C19BB /* theracingline.app */,
+				BBD3A29B255DD1FB005C19BB /* theracingline-iOS.app */,
+				BBBFEE7D25B61A6700B95742 /* theracingline-widgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -347,25 +412,47 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BBD3A29A255DD1FB005C19BB /* theracingline */ = {
+		BBBFEE7C25B61A6700B95742 /* theracingline-widgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBD3A2AA255DD1FB005C19BB /* Build configuration list for PBXNativeTarget "theracingline" */;
+			buildConfigurationList = BBBFEE8B25B61A6800B95742 /* Build configuration list for PBXNativeTarget "theracingline-widgetExtension" */;
 			buildPhases = (
-				BBD3A297255DD1FB005C19BB /* Sources */,
-				BBD3A298255DD1FB005C19BB /* Frameworks */,
-				BBD3A299255DD1FB005C19BB /* Resources */,
+				BBBFEE7925B61A6700B95742 /* Sources */,
+				BBBFEE7A25B61A6700B95742 /* Frameworks */,
+				BBBFEE7B25B61A6700B95742 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = theracingline;
+			name = "theracingline-widgetExtension";
+			packageProductDependencies = (
+				BBBFEE9A25B61DB500B95742 /* SwiftDate */,
+			);
+			productName = "theracingline-widgetExtension";
+			productReference = BBBFEE7D25B61A6700B95742 /* theracingline-widgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		BBD3A29A255DD1FB005C19BB /* theracingline-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BBD3A2AA255DD1FB005C19BB /* Build configuration list for PBXNativeTarget "theracingline-iOS" */;
+			buildPhases = (
+				BBD3A297255DD1FB005C19BB /* Sources */,
+				BBD3A298255DD1FB005C19BB /* Frameworks */,
+				BBD3A299255DD1FB005C19BB /* Resources */,
+				BBBFEE8E25B61A6800B95742 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BBBFEE8925B61A6800B95742 /* PBXTargetDependency */,
+			);
+			name = "theracingline-iOS";
 			packageProductDependencies = (
 				BBD3A2B9255DDFB0005C19BB /* SwiftDate */,
 				BB97641325928C870075D740 /* TPInAppReceipt */,
 			);
 			productName = theracingline;
-			productReference = BBD3A29B255DD1FB005C19BB /* theracingline.app */;
+			productReference = BBD3A29B255DD1FB005C19BB /* theracingline-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -374,9 +461,12 @@
 		BBD3A293255DD1FB005C19BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1210;
+				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
+					BBBFEE7C25B61A6700B95742 = {
+						CreatedOnToolsVersion = 12.3;
+					};
 					BBD3A29A255DD1FB005C19BB = {
 						CreatedOnToolsVersion = 12.1;
 					};
@@ -399,12 +489,21 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BBD3A29A255DD1FB005C19BB /* theracingline */,
+				BBD3A29A255DD1FB005C19BB /* theracingline-iOS */,
+				BBBFEE7C25B61A6700B95742 /* theracingline-widgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BBBFEE7B25B61A6700B95742 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBBFEE8625B61A6800B95742 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBD3A299255DD1FB005C19BB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -422,6 +521,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		BBBFEE7925B61A6700B95742 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBBFEE9125B61CA000B95742 /* Session.swift in Sources */,
+				BBBFEE9725B61D8C00B95742 /* Keys.swift in Sources */,
+				BBBFEE9425B61D6300B95742 /* DataController.swift in Sources */,
+				BBBFEE8425B61A6700B95742 /* theracingline_widget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBD3A297255DD1FB005C19BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,7 +589,61 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		BBBFEE8925B61A6800B95742 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBBFEE7C25B61A6700B95742 /* theracingline-widgetExtension */;
+			targetProxy = BBBFEE8825B61A6800B95742 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		BBBFEE8C25B61A6800B95742 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "theracingline-widgetExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5D7DMNG452;
+				INFOPLIST_FILE = "theracingline-widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.daveellis.theracingline.theracingline-widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BBBFEE8D25B61A6800B95742 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "theracingline-widgetExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5D7DMNG452;
+				INFOPLIST_FILE = "theracingline-widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.daveellis.theracingline.theracingline-widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		BBD3A2A8255DD1FB005C19BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -599,6 +763,7 @@
 		BBD3A2AB255DD1FB005C19BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = theracingline/theracingline.entitlements;
@@ -616,7 +781,7 @@
 				MARKETING_VERSION = 1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -625,6 +790,7 @@
 		BBD3A2AC255DD1FB005C19BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = theracingline/theracingline.entitlements;
@@ -642,7 +808,7 @@
 				MARKETING_VERSION = 1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -651,6 +817,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BBBFEE8B25B61A6800B95742 /* Build configuration list for PBXNativeTarget "theracingline-widgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BBBFEE8C25B61A6800B95742 /* Debug */,
+				BBBFEE8D25B61A6800B95742 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BBD3A296255DD1FB005C19BB /* Build configuration list for PBXProject "theracingline" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -660,7 +835,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBD3A2AA255DD1FB005C19BB /* Build configuration list for PBXNativeTarget "theracingline" */ = {
+		BBD3A2AA255DD1FB005C19BB /* Build configuration list for PBXNativeTarget "theracingline-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BBD3A2AB255DD1FB005C19BB /* Debug */,
@@ -695,6 +870,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BB97641225928C870075D740 /* XCRemoteSwiftPackageReference "TPInAppReceipt" */;
 			productName = TPInAppReceipt;
+		};
+		BBBFEE9A25B61DB500B95742 /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BBD3A2B8255DDFB0005C19BB /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
 		};
 		BBD3A2B9255DDFB0005C19BB /* SwiftDate */ = {
 			isa = XCSwiftPackageProductDependency;
