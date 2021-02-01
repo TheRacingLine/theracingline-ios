@@ -121,6 +121,7 @@ struct theracingline_widgetEntryView : View {
 
     var body: some View {
         
+        // get maximum visible for the specific widget size
         let maxVisible = getMaxVisible()
         
         VStack() {
@@ -144,75 +145,82 @@ struct theracingline_widgetEntryView : View {
             .font(.subheadline)
             .padding(.bottom, -2)
 
-            // the list of races
-            ForEach(0..<entry.sessions.count) { i in
-                if i < maxVisible {
-                    let gradientStart = Color(red: entry.sessions[i].darkR / 255, green: entry.sessions[i].darkG / 255, blue: entry.sessions[i].darkB / 255)
-                    let gradientEnd = Color(red: entry.sessions[i].lightR / 255, green: entry.sessions[i].lightG / 255, blue: entry.sessions[i].lightB / 255)
+            // if there are races
+            if entry.sessions.count > 0 {
+                
+                // the list of races
+                ForEach(0..<entry.sessions.count) { i in
+                    if i < maxVisible {
+                        let gradientStart = Color(red: entry.sessions[i].darkR / 255, green: entry.sessions[i].darkG / 255, blue: entry.sessions[i].darkB / 255)
+                        let gradientEnd = Color(red: entry.sessions[i].lightR / 255, green: entry.sessions[i].lightG / 255, blue: entry.sessions[i].lightB / 255)
 
-                    HStack{
-                        // Colour pill
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(LinearGradient(
-                                  gradient: .init(colors: [gradientStart, gradientEnd]),
-                                  startPoint: .init(x: 0.5, y: 0),
-                                  endPoint: .init(x: 0.5, y: 0.6)
-                                ))
-                            .frame(width: 8)
-                        VStack {
-                            HStack{
-                                Text(entry.sessions[i].series)
-                                    .font(.system(size: 10))
-                                Spacer()
-                                if entry.userAccessLevel >= 3 {
-                                    if widgetFamily != .systemSmall {
-                                        Text(entry.sessions[i].timeAsString())
-                                            .font(.system(size: 10))
-                                    }
-                                }
-                            }
-                            HStack{
-                                Text(entry.sessions[i].circuit)
-                                    .font(.system(size: 10))
-                                Spacer()
-                                if entry.userAccessLevel >= 3 {
-                                    if widgetFamily != .systemSmall {
-                                        Text("\(entry.sessions[i].day()) - \(entry.sessions[i].dateAsString())")
-                                            .font(.system(size: 10))
-                                    }
-                                }
-                            } // HSTACK
-                        } // VSTACK
-                        .font(.caption2)
-                    } //HSTACK
-                    .frame(height: 20)
-                } // IF STATEMENT
-            } // FOREACH FOR LIST
-            
-            // the dots for races
-            if entry.sessions.count > maxVisible {
-                let count = entry.sessions.count - maxVisible
-                HStack {
-                    Text("+\(count)")
-                        .font(.system(size: 10))
-                    ForEach(maxVisible..<entry.sessions.count) { i in
-                        if ((i < 9 && widgetFamily == .systemSmall) || (i < 15 && widgetFamily != .systemSmall)) {
-                            let gradientStart = Color(red: entry.sessions[i].darkR / 255, green: entry.sessions[i].darkG / 255, blue: entry.sessions[i].darkB / 255)
-                            let gradientEnd = Color(red: entry.sessions[i].lightR / 255, green: entry.sessions[i].lightG / 255, blue: entry.sessions[i].lightB / 255)
-                            Circle()
+                        HStack{
+                            // Colour pill
+                            RoundedRectangle(cornerRadius: 4)
                                 .fill(LinearGradient(
                                       gradient: .init(colors: [gradientStart, gradientEnd]),
                                       startPoint: .init(x: 0.5, y: 0),
                                       endPoint: .init(x: 0.5, y: 0.6)
                                     ))
-                                .frame(width: 8, height: 8)
+                                .frame(width: 8)
+                            VStack {
+                                HStack{
+                                    Text(entry.sessions[i].series)
+                                        .font(.system(size: 10))
+                                    Spacer()
+                                    if entry.userAccessLevel >= 3 {
+                                        if widgetFamily != .systemSmall {
+                                            Text(entry.sessions[i].timeAsString())
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+                                }
+                                HStack{
+                                    Text(entry.sessions[i].circuit)
+                                        .font(.system(size: 10))
+                                    Spacer()
+                                    if entry.userAccessLevel >= 3 {
+                                        if widgetFamily != .systemSmall {
+                                            Text("\(entry.sessions[i].day()) - \(entry.sessions[i].dateAsString())")
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+                                } // HSTACK
+                            } // VSTACK
+                            .font(.caption2)
+                        } //HSTACK
+                        .frame(height: 20)
+                    } // IF STATEMENT
+                } // FOREACH FOR LIST
+                
+                // the dots for races
+                if entry.sessions.count > maxVisible {
+                    let count = entry.sessions.count - maxVisible
+                    HStack {
+                        Text("+\(count)")
+                            .font(.system(size: 10))
+                        ForEach(maxVisible..<entry.sessions.count) { i in
+                            if ((i < 9 && widgetFamily == .systemSmall) || (i < 15 && widgetFamily != .systemSmall)) {
+                                let gradientStart = Color(red: entry.sessions[i].darkR / 255, green: entry.sessions[i].darkG / 255, blue: entry.sessions[i].darkB / 255)
+                                let gradientEnd = Color(red: entry.sessions[i].lightR / 255, green: entry.sessions[i].lightG / 255, blue: entry.sessions[i].lightB / 255)
+                                Circle()
+                                    .fill(LinearGradient(
+                                          gradient: .init(colors: [gradientStart, gradientEnd]),
+                                          startPoint: .init(x: 0.5, y: 0),
+                                          endPoint: .init(x: 0.5, y: 0.6)
+                                        ))
+                                    .frame(width: 8, height: 8)
+                            }
                         }
+                        Spacer()
                     }
-                    Spacer()
                 }
+                Spacer()
+            } else {
+                // display no coming soon events
+                Text("No Races Soon")
             }
-            
-            Spacer()
+           
         } //VSTACK
         .padding()
     }
@@ -238,6 +246,10 @@ struct theracingline_widgetEntryView : View {
         @unknown default:
             return 3
         }
+    }
+    
+    func printTest(text: String){
+        print(text)
     }
 }
 
