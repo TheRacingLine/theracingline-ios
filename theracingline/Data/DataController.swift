@@ -12,16 +12,13 @@ import SwiftUI
 class DataController: ObservableObject {
 
     static var shared = DataController()
-    
-//    var ads: [Ad] = []
-    
+        
     @Published var sessions: [Session] = []
     @Published var seriesList: [String] = []
     @Published var userAccessLevel: Int = 0
     @Published var onboarded: Bool = false
     @Published var visibleSeries: [String] = []
     @Published var seriesWithNotifications: [String] = []
-//    @Published var selectedAd: Ad = testAd
     @Published var selectAllSeries: Bool = false
     @Published var delesctAllSeries: Bool = false
     @Published var notificationSound: String = "flyby_notification_no_bell.aiff"
@@ -36,7 +33,7 @@ class DataController: ObservableObject {
     var thisWeekSessions: [Session] {
         
         let today = Date()
-        let weekAway = Date() + 7.days
+        let weekAway = Date() + 5.days
         
         return sessions.filter { $0.date < weekAway && $0.date >= today && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
         
@@ -91,17 +88,7 @@ class DataController: ObservableObject {
         }
     }
     
-    func getTodayForWidget() -> [Session]{
-        if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
-            if let data = defaults.data(forKey: "sessions"){
-                let decoder = JSONDecoder()
-                if let jsonSessions = try? decoder.decode([Session].self, from: data) {
-                    return jsonSessions
-                }
-            }
-        }
-        return []
-    }
+    
     
     func getNewSessions() {
         let key = jsonbinsKey
@@ -335,19 +322,6 @@ class DataController: ObservableObject {
         }
     }
     
-    func getUserAccessLevelForWidget() -> Int {
-        if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
-            if let data = defaults.data(forKey: "userAccessLevel"){
-                let decoder = JSONDecoder()
-                if let jsonUserAccessLevel = try? decoder.decode(Int.self, from: data) {
-                    return jsonUserAccessLevel
-                }
-            }
-        }
-        return 0
-    }
-    
-    
     // MARK:- Time Controllers
     
     func timeToUTC(dateStr: String, timeZoneString: String) -> String? {
@@ -489,95 +463,6 @@ class DataController: ObservableObject {
         self.visibleSeries = []
     }
     
-    // MARK: - Ad controller
-    
-    // save ads
-//    func saveAdData() {
-//        DispatchQueue.global().async {
-//            let encoder = JSONEncoder()
-//            if let encoded = try? encoder.encode(self.ads) {
-//                UserDefaults.standard.set(encoded, forKey: "ads")
-//                UserDefaults.standard.synchronize() // MAYBE DO NOT NEED
-//            }
-//        }
-//    }
-    
-    // load ads
-
-//    func loadAdData() {
-//        DispatchQueue.global().async {
-//            if let data = UserDefaults.standard.data(forKey: "ads"){
-//                let decoder = JSONDecoder()
-//                if let jsonAds = try? decoder.decode([Ad].self, from: data) {
-//                    DispatchQueue.main.async{
-//                        self.ads = jsonAds
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
-    // download ads
-    
-//    func getAdList() {
-//        if self.userAccessLevel == 0 {
-//            let key = jsonbinsKey
-//            if let url = URL(string: adsURL){
-//                var request = URLRequest(url: url)
-//                request.addValue(key, forHTTPHeaderField: "secret-key")
-//
-//                URLSession.shared.dataTask(with: request) { (data, response, error) in
-//                    if let webData = data {
-//                        if let json = try? JSONSerialization.jsonObject(with: webData, options: []) as? [[String:String]]{
-//                            var downloadedAds: [Ad] = []
-//
-//                            for jsonAd in json {
-//
-//                                let ad = Ad()
-//
-//                                if let id = jsonAd["id"] {
-//                                    ad.id = id
-//                                }
-//
-//                                if let title = jsonAd["title"] {
-//                                    ad.title = title
-//                                }
-//
-//                                if let subtitle = jsonAd["subtitle"] {
-//                                    ad.subtitle = subtitle
-//                                }
-//
-//                                if let link = jsonAd["link"]{
-//                                    ad.link = link
-//                                }
-//
-//                                downloadedAds.append(ad)
-//
-//                            }
-//
-//                            DispatchQueue.main.async {
-//                                self.ads = downloadedAds
-//                                self.saveAdData()
-//                                self.randomlySelectAd()
-//                            }
-//                        }
-//                    }
-//                }.resume()
-//            }
-//        }
-//    }
-    
-    
-    // randomly pick an ad
-    
-//    func randomlySelectAd() {
-//        let max = ads.count
-//        if max > 0 {
-//            let randomInt = Int.random(in: 0..<max)
-//            selectedAd = ads[randomInt]
-//        }
-//    }
-    
     // MARK:- Sound Data Controllers
     
     func setNotificationSound(sound: String) {
@@ -614,6 +499,53 @@ class DataController: ObservableObject {
     func menuHaptics() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
+    }
+    
+    // MARK:- Widget Data Controllers
+    
+    func getRacesForWidget() -> [Session]{
+        if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+            if let data = defaults.data(forKey: "sessions"){
+                let decoder = JSONDecoder()
+                if let jsonSessions = try? decoder.decode([Session].self, from: data) {
+                    
+                    let today = Date()
+                    let weekAway = Date() + 5.days
+                    
+                    let thisWeeksEvents = jsonSessions.filter { $0.date < weekAway && $0.date >= today }.sorted { $0.date < $1.date }
+
+//                    let slice = thisWeeksEvents.prefix(100)
+                    return thisWeeksEvents
+                    
+                }
+            }
+        }
+        return []
+    }
+    
+    func getUserAccessLevelForWidget() -> Int {
+        if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+            if let data = defaults.data(forKey: "userAccessLevel"){
+                let decoder = JSONDecoder()
+                if let jsonUserAccessLevel = try? decoder.decode(Int.self, from: data) {
+                    return jsonUserAccessLevel
+                }
+            }
+        }
+        return 0
+    }
+    
+    func getVisibleSeriesPreferencesForWidget() -> [String]{
+            
+        if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+            if let data = defaults.data(forKey: "visibleSeriesPreferences"){
+                let decoder = JSONDecoder()
+                if let jsonSeriesList = try? decoder.decode([String].self, from: data) {
+                    return jsonSeriesList
+                }
+            }
+        }
+        return []
     }
 }
 
