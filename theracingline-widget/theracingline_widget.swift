@@ -97,7 +97,7 @@ struct Provider: TimelineProvider {
                 let numberOfRaces = sessionsArray.count
                 let slicedArray = Array(sessionsArray.suffix(numberOfRaces - numberOfRacesToDrop))
                 
-                entry = SessionEntry(date: currentDate, sessions: sessionsArray, userAccessLevel: userAccessLevel)
+                entry = SessionEntry(date: currentDate, sessions: slicedArray, userAccessLevel: userAccessLevel)
             }
             
             entries.append(entry)
@@ -149,10 +149,10 @@ struct theracingline_widgetEntryView : View {
             if entry.sessions.count > 0 {
                 
                 // the list of races
-                ForEach(0..<entry.sessions.count) { i in
+                ForEach(Array(entry.sessions.enumerated()), id: \.1) { i, element in
                     if i < maxVisible {
-                        let gradientStart = Color(red: entry.sessions[i].darkR / 255, green: entry.sessions[i].darkG / 255, blue: entry.sessions[i].darkB / 255)
-                        let gradientEnd = Color(red: entry.sessions[i].lightR / 255, green: entry.sessions[i].lightG / 255, blue: entry.sessions[i].lightB / 255)
+                        let gradientStart = Color(red: element.darkR / 255, green: element.darkG / 255, blue: element.darkB / 255)
+                        let gradientEnd = Color(red: element.lightR / 255, green: element.lightG / 255, blue: element.lightB / 255)
 
                         HStack{
                             // Colour pill
@@ -165,25 +165,25 @@ struct theracingline_widgetEntryView : View {
                                 .frame(width: 8)
                             VStack {
                                 HStack{
-                                    Text(entry.sessions[i].series)
+                                    Text(element.series)
                                         .font(.system(size: 10))
                                     Spacer()
-                                    if entry.userAccessLevel >= 3 {
+//                                    if entry.userAccessLevel >= 3 {
                                         if widgetFamily != .systemSmall {
-                                            Text(entry.sessions[i].timeAsString())
+                                            Text(element.timeAsString())
                                                 .font(.system(size: 10))
                                         }
-                                    }
+//                                    }
                                 }
                                 HStack{
-                                    Text(entry.sessions[i].circuit)
+                                    Text(element.circuit)
                                         .font(.system(size: 10))
                                     Spacer()
-                                    if entry.userAccessLevel >= 3 {
+//                                    if entry.userAccessLevel >= 3 {
                                         if widgetFamily != .systemSmall {
-                                            Text("\(entry.sessions[i].day()) - \(entry.sessions[i].dateAsString())")
+                                            Text("\(element.day()) - \(element.dateAsString())")
                                                 .font(.system(size: 10))
-                                        }
+//                                        }
                                     }
                                 } // HSTACK
                             } // VSTACK
@@ -194,27 +194,40 @@ struct theracingline_widgetEntryView : View {
                 } // FOREACH FOR LIST
                 
                 // the dots for races
+                // if there are more races than can be displayed on the widget
                 if entry.sessions.count > maxVisible {
+                    
+                    // number of additional races to be displayed in the dots
                     let count = entry.sessions.count - maxVisible
+                    
                     HStack {
                         Text("+\(count)")
                             .font(.system(size: 10))
-                        ForEach(maxVisible..<entry.sessions.count) { i in
-                            if ((i < 9 && widgetFamily == .systemSmall) || (i < 15 && widgetFamily != .systemSmall)) {
-                                let gradientStart = Color(red: entry.sessions[i].darkR / 255, green: entry.sessions[i].darkG / 255, blue: entry.sessions[i].darkB / 255)
-                                let gradientEnd = Color(red: entry.sessions[i].lightR / 255, green: entry.sessions[i].lightG / 255, blue: entry.sessions[i].lightB / 255)
-                                Circle()
-                                    .fill(LinearGradient(
-                                          gradient: .init(colors: [gradientStart, gradientEnd]),
-                                          startPoint: .init(x: 0.5, y: 0),
-                                          endPoint: .init(x: 0.5, y: 0.6)
-                                        ))
-                                    .frame(width: 8, height: 8)
+                        
+                        // for each race that could not be displayed in full
+                        
+                        
+                        
+                        ForEach(Array(entry.sessions.enumerated()), id: \.1) { i, element in
+                            
+                            // set
+                            if i >= maxVisible {
+                                if ((i < 9 && widgetFamily == .systemSmall) || (i < 15 && widgetFamily != .systemSmall)) {
+                                    let gradientStart = Color(red: element.darkR / 255, green: element.darkG / 255, blue: element.darkB / 255)
+                                    let gradientEnd = Color(red: element.lightR / 255, green: element.lightG / 255, blue: element.lightB / 255)
+                                    Circle()
+                                        .fill(LinearGradient(
+                                              gradient: .init(colors: [gradientStart, gradientEnd]),
+                                              startPoint: .init(x: 0.5, y: 0),
+                                              endPoint: .init(x: 0.5, y: 0.6)
+                                            ))
+                                        .frame(width: 8, height: 8)
+                                }
                             }
-                        }
+                        } // FOREACH FOR LIST
                         Spacer()
-                    }
-                }
+                    } // HSTACK
+                } // DOTS
                 Spacer()
             } else {
                 // display no coming soon events

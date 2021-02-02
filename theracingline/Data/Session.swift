@@ -8,7 +8,7 @@
 import Foundation
 import SwiftDate
 
-class Session: ObservableObject, Identifiable, Codable, Equatable {
+class Session: ObservableObject, Identifiable, Codable, Equatable, Hashable {
     var id = UUID().uuidString
     var series = ""
     var accessLevel = 0
@@ -191,6 +191,10 @@ class Session: ObservableObject, Identifiable, Codable, Equatable {
 //        default:
 //            return "Day Error"
 //        }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     
