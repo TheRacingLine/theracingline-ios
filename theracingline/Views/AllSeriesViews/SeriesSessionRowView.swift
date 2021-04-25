@@ -30,47 +30,30 @@ struct SeriesSessionRowView: View {
                 Text(session.circuit)
                     .font(.title2)
                     .fontWeight(.bold)
-                if(session.durationType == "L") {
-                    if data.userAccessLevel < 3 {
-                        Text("\(session.sessionName)")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
-                    } else {
-                        if session.duration == 0 {
-                            Text("\(session.sessionName) - TBA Distance")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        } else {
-                            Text("\(session.sessionName) - \(session.duration) Laps")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        }
-                    }
+ 
+                if data.userAccessLevel < 3 || session.sessionType != "R"{
+                    Text("\(session.sessionName)")
+                        .font(.caption)
+                        .foregroundColor(Color.secondary)
                 } else {
-                    if data.userAccessLevel < 3 {
-                        Text("\(session.circuit) - \(session.sessionName)")
+                    if session.duration == 0 {
+                        Text("\(session.sessionName) - TBA Distance")
                             .font(.caption)
                             .foregroundColor(Color.secondary)
                     } else {
-                        if session.duration == 0 {
-                            Text("\(session.sessionName) - TBA Distance")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        } else {
-                            Text("\(session.sessionName) - \(session.getDurationText())")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        }
+                        Text("\(session.sessionName) \(session.getDurationText())")
+                            .font(.caption)
+                            .foregroundColor(Color.secondary)
                     }
                 }
                 HStack{
                     if data.userAccessLevel < 3 {
-                        Text("\(session.dateAsString())")
+                        Text("\(session.day()) \(session.dateAsString())")
                     } else {
                         if session.tba {
-                            Text("\(session.dateAsString()) - Start Time TBA")
+                            Text("\(session.day()) \(session.dateAsString()) - Time TBA")
                         } else {
-                            Text("\(session.dateAsString()) - \(session.timeAsString())")
+                            Text("\(session.day()) \(session.dateAsString()) - \(session.timeAsString())")
                         }
                     }
                     Spacer()

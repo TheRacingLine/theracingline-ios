@@ -30,47 +30,31 @@ struct SeriesRowView: View {
                 Text(seriesSessions[0].series)
                     .font(.title2)
                     .fontWeight(.bold)
-                if(seriesSessions[0].durationType == "L") {
-                    if data.userAccessLevel < 3 {
-                        Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName)")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
-                    } else {
-                        if seriesSessions[0].duration == 0 {
-                            Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - TBA Distance")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        } else {
-                            Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - \(seriesSessions[0].duration) Laps")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        }
-                    }
+
+                if data.userAccessLevel < 3 || seriesSessions[0].sessionType != "R" {
+                    Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName)")
+                        .font(.caption)
+                        .foregroundColor(Color.secondary)
                 } else {
-                    if data.userAccessLevel < 3 {
-                        Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName)")
+                    if seriesSessions[0].duration == 0 {
+                        Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - TBA Distance")
                             .font(.caption)
                             .foregroundColor(Color.secondary)
                     } else {
-                        if seriesSessions[0].duration == 0 {
-                            Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - TBA Distance")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        } else {
-                            Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - \(seriesSessions[0].getDurationText())")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        }
+                        Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) \(seriesSessions[0].getDurationText())")
+                            .font(.caption)
+                            .foregroundColor(Color.secondary)
                     }
                 }
+                
                 HStack{
                     if data.userAccessLevel < 3 {
-                        Text("\(seriesSessions[0].dateAsString())")
+                        Text("\(seriesSessions[0].day()) \(seriesSessions[0].dateAsString())")
                     } else {
                         if seriesSessions[0].tba {
-                            Text("\(seriesSessions[0].dateAsString()) - Start Time TBA")
+                            Text("\(seriesSessions[0].day()) \(seriesSessions[0].dateAsString()) - Time TBA")
                         } else {
-                            Text("\(seriesSessions[0].dateAsString()) - \(seriesSessions[0].timeAsString())")
+                            Text("\(seriesSessions[0].day()) \(seriesSessions[0].dateAsString()) - \(seriesSessions[0].timeAsString())")
                         }
                         
                     }

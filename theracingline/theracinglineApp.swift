@@ -17,6 +17,9 @@ struct theracinglineApp: App {
 
         WindowGroup {
             MainView()
+                .onAppear() {
+                    PhoneToWatchDataController.shared.setupWCSession()
+                }
         } //WINDOWGROUP
     }
 }

@@ -26,16 +26,38 @@ class DataController: ObservableObject {
 //    @Published var notificationOffset2: Int = 0
 
     var todaysSessions: [Session] {
-        return sessions.filter { $0.date.isToday && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
+        
+        let seconds = TimeZone.current.secondsFromGMT()
+        let minutesToGMT = (seconds / 60) + (seconds % 60)
+    
+        let today = Date()
+        let todayMidnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: today)! + minutesToGMT.minutes
+        let todayAlmostMidnight = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: today)!  + minutesToGMT.minutes
+        let tomorrowFourAM = todayAlmostMidnight + 4.hours + 30.minutes
+        
+        return sessions.filter { ($0.dateInTimeZone() >= todayMidnight && $0.dateInTimeZone() < tomorrowFourAM) && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
     }
     
     // get this weeks events
     var thisWeekSessions: [Session] {
         
-        let today = Date()
-        let weekAway = Date() + 5.days
+        let seconds = TimeZone.current.secondsFromGMT()
+        let minutesToGMT = (seconds / 60) + (seconds % 60)
         
-        return sessions.filter { $0.date < weekAway && $0.date >= today && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        let nextSundayDay: Date
+        
+        if weekday == 1 {
+            nextSundayDay = Date()
+        } else {
+            nextSundayDay = Date().dateAt(.nextWeekday(.sunday))
+        }
+                
+        let lastSundayDay = nextSundayDay - 6.days
+        let nextSunday = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: nextSundayDay)! + minutesToGMT.minutes  + 4.hours + 30.minutes
+        let lastSunday = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: lastSundayDay)! + minutesToGMT.minutes
+        
+        return sessions.filter { $0.dateInTimeZone() <= nextSunday && $0.dateInTimeZone() >= lastSunday && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
         
     }
 
@@ -66,9 +88,11 @@ class DataController: ObservableObject {
                 if let encoded = try? encoder.encode(self.sessions) {
                     defaults.set(encoded, forKey: "sessions")
                     defaults.synchronize() // MAYBE DO NOT NEED
+                    
                 }
-                
             }
+            
+            PhoneToWatchDataController.shared.sendContext(context: PhoneToWatchDataController.shared.convertSessionsToContext(sessions: self.thisWeekSessions))
         }
     }
     
@@ -81,6 +105,7 @@ class DataController: ObservableObject {
                     if let jsonSessions = try? decoder.decode([Session].self, from: data) {
                         DispatchQueue.main.async{
                             self.sessions = jsonSessions
+                            PhoneToWatchDataController.shared.sendContext(context: PhoneToWatchDataController.shared.convertSessionsToContext(sessions: self.thisWeekSessions))
                         }
                     }
                 }
@@ -94,8 +119,7 @@ class DataController: ObservableObject {
         let key = jsonbinsKey
         
         
-        if let url = URL(string: sessionsStagingURL){ // STAGING SESSION LIST
-//        if let url = URL(string: sessionsProductionURL){ // PROD SESSION LIST
+        if let url = URL(string: sessionURL){ // SESSION LIST
  
             var request = URLRequest(url: url)
             request.addValue(key, forHTTPHeaderField: "secret-key")
@@ -103,7 +127,7 @@ class DataController: ObservableObject {
                 if let webData = data {
 
                     if let json = try? JSONSerialization.jsonObject(with: webData, options: []) as? [[String:String]]{
-
+                        print(json)
                         var downloadedSessions: [Session] = []
                         
                         for jsonSession in json {
@@ -196,7 +220,7 @@ class DataController: ObservableObject {
                             downloadedSessions.append(session)
                         } // FOR JSONSession
                         DispatchQueue.main.async {
-                            print("Sessions Downloaded")
+//                            print("Sessions Downloaded")
                             self.sessions = downloadedSessions
                             self.saveData()
                         }
@@ -213,8 +237,7 @@ class DataController: ObservableObject {
         let key = jsonbinsKey
         
         
-         if let url = URL(string: seriesStagingURL){ // STAGING SERIES LIST
-//        if let url = URL(string: seriesProductionURL){ // PROD SERIES LIST
+        if let url = URL(string: seriesURL){ // SERIES LIST
             
             
             var request = URLRequest(url: url)
@@ -251,6 +274,7 @@ class DataController: ObservableObject {
 
                             self.seriesList = downloadedSeriesList
                             self.saveSeriesData()
+                            
                         }
                     }
                 }
@@ -314,6 +338,7 @@ class DataController: ObservableObject {
                     let decoder = JSONDecoder()
                     if let jsonUserAccessLevel = try? decoder.decode(Int.self, from: data) {
                         DispatchQueue.main.async{
+//                            print(jsonUserAccessLevel)
                             self.userAccessLevel = jsonUserAccessLevel
                         }
                     }
@@ -377,15 +402,30 @@ class DataController: ObservableObject {
     func getNotificationPreferences(){
         // load each time the array is updated
         // load before building the notification
+        
         DispatchQueue.global().async {
+            
             if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(self.seriesWithNotifications) {
-                    defaults.set(encoded, forKey: "notificationPreferences")
-                    defaults.synchronize() // MAYBE DO NOT NEED
+                if let data = defaults.data(forKey: "notificationPreferences"){
+                    let decoder = JSONDecoder()
+                    if let jsonSeriesList = try? decoder.decode([String].self, from: data) {
+                        DispatchQueue.main.async{
+                            self.seriesWithNotifications = jsonSeriesList
+                        }
+                    }
                 }
             }
         }
+        
+//        DispatchQueue.global().async {
+//            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+//                let encoder = JSONEncoder()
+//                if let encoded = try? encoder.encode(self.seriesWithNotifications) {
+//                    defaults.set(encoded, forKey: "notificationPreferences")
+//                    defaults.synchronize() // MAYBE DO NOT NEED
+//                }
+//            }
+//        }
     }
     
     func setNotificationPreferences(){
@@ -509,14 +549,23 @@ class DataController: ObservableObject {
                 let decoder = JSONDecoder()
                 if let jsonSessions = try? decoder.decode([Session].self, from: data) {
                     
-                    let today = Date()
-                    let weekAway = Date() + 5.days
+                    let seconds = TimeZone.current.secondsFromGMT()
+                    let minutesToGMT = (seconds / 60) + (seconds % 60)
                     
-                    let thisWeeksEvents = jsonSessions.filter { $0.date < weekAway && $0.date >= today }.sorted { $0.date < $1.date }
+                    let weekday = Calendar.current.component(.weekday, from: Date())
+                    let nextSundayDay: Date
+                    
+                    if weekday == 1 {
+                        nextSundayDay = Date()
+                    } else {
+                        nextSundayDay = Date().dateAt(.nextWeekday(.sunday))
+                    }
 
-//                    let slice = thisWeeksEvents.prefix(100)
-                    return thisWeeksEvents
+                    let nextSunday = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: nextSundayDay)! + minutesToGMT.minutes  + 4.hours + 30.minutes
                     
+                    let now = Date()
+                    
+                    return jsonSessions.filter { $0.date < nextSunday && $0.date >= now }.sorted { $0.date < $1.date }
                 }
             }
         }

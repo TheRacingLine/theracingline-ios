@@ -43,7 +43,7 @@ struct SettingsListView: View {
                 } //GROUPBOX
                 
 
-                GroupBox(label: SettingsLabelView(labelText: "Configure Series", labelImage: "app.badge")) {
+                GroupBox(label: SettingsLabelView(labelText: "Settings", labelImage: "app.badge")) {
                     Divider().padding(.vertical, 4)
                     
                     NavigationLink(destination: ConfigureSeries()) {
@@ -63,6 +63,13 @@ struct SettingsListView: View {
                             SettingsRowView(content: "Sounds", symbol: "chevron.right")
                         }
                     }
+                    
+                    Divider().padding(.vertical, 4)
+                    
+                    NavigationLink(destination: WidgetsFAQ()) {
+                        SettingsRowView(content: "Widgets", symbol: "chevron.right")
+                    }
+                    
                 } //GROUPBOX
                 
                 
@@ -107,31 +114,45 @@ struct SettingsListView: View {
                 GroupBox(label: SettingsLabelView(labelText: "tRL Links", labelImage: "link")) {
                     Divider().padding(.vertical, 4)
                     
-                    Link(destination: URL(string: "https://theracingline.app")!) {
-                        SettingsLinkView(content: "theRacingLine.app", symbol: "arrow.up.right.square", linkDestination: "theracingline.app")
+                    Link(destination: URL(string: "https://twitter.com/theracingline")!) {
+                        SettingsLinkView(content: "@theracingline", symbol: "arrow.up.right.square", linkDestination: "twitter.com/theracingline")
+                    }
+                    Divider().padding(.vertical, 4)
+
+                    Link(destination: URL(string: "https://twitter.com/daveellisdev")!) {
+                        SettingsLinkView(content: "@daveellisdev", symbol: "arrow.up.right.square", linkDestination: "twitter.com/daveellisdev")
+                    }
+                    Divider().padding(.vertical, 4)
+                    Link(destination: URL(string: "https://daveellis.dev")!) {
+                        SettingsLinkView(content: "DaveEllis.dev", symbol: "arrow.up.right.square", linkDestination: "daveellis.dev")
+                    }
+                } //GROUPBOX
+                
+                GroupBox(label: SettingsLabelView(labelText: "Our Friends", labelImage: "link")) {
+                    Divider().padding(.vertical, 4)
+                    
+                    Link(destination: URL(string: "https://www.hydrorace.co.uk/")!) {
+                        SettingsLinkView(content: "Hydrorace Drinks Bottles", symbol: "arrow.up.right.square", linkDestination: "hydrorace.co.uk")
+                    }
+                    Divider().padding(.vertical, 4)
+                    
+                    Link(destination: URL(string: "https://soundsgoodsoundworks.com/")!) {
+                        SettingsLinkView(content: "Sounds Good Sound Works", symbol: "arrow.up.right.square", linkDestination: "soundsgoodsoundworks.com")
+                    }
+                    Divider().padding(.vertical, 4)
+                    
+                    Link(destination: URL(string: "https://endurancechat.podbean.com/")!) {
+                        SettingsLinkView(content: "Endurance Chat Podcast", symbol: "arrow.up.right.square", linkDestination: "endurancechat.podbean.com")
+                    }
+                    Divider().padding(.vertical, 4)
+                    
+                    Link(destination: URL(string: "https://www.youtube.com/c/GregzVR/featured")!) {
+                        SettingsLinkView(content: "GregzVR VR Sim Racing", symbol: "arrow.up.right.square", linkDestination: "youtube.com/c/GregzVR/featured")
                     }
                     Divider().padding(.vertical, 4)
                     
                     Link(destination: URL(string: "https://theracingline.net")!) {
-                        SettingsLinkView(content: "theRacingLine.net", symbol: "arrow.up.right.square", linkDestination: "theracingline.net")
-                    }
-                    Divider().padding(.vertical, 4)
-                    
-                    Link(destination: URL(string: "https://twitter.com/theracingline")!) {
-                        SettingsLinkView(content: "@theracingline", symbol: "arrow.up.right.square", linkDestination: "twitter.com/theracingline")
-                    }
-                } //GROUPBOX
-                
-                GroupBox(label: SettingsLabelView(labelText: ".dev Links", labelImage: "link")) {
-                    Divider().padding(.vertical, 4)
-                    
-                    Link(destination: URL(string: "https://daveellis.dev")!) {
-                        SettingsLinkView(content: "DaveEllis.dev", symbol: "arrow.up.right.square", linkDestination: "daveellis.dev")
-                    }
-                    Divider().padding(.vertical, 4)
-                    
-                    Link(destination: URL(string: "https://twitter.com/daveellisdev")!) {
-                        SettingsLinkView(content: "@daveellisdev", symbol: "arrow.up.right.square", linkDestination: "twitter.com/daveellisdev")
+                        SettingsLinkView(content: "theRACINGLINE.net", symbol: "arrow.up.right.square", linkDestination: "theracingline.net")
                     }
                 } //GROUPBOX
 
@@ -156,7 +177,7 @@ struct SettingsListView: View {
                     
                     Divider().padding(.vertical, 4)
 
-                    SettingsDescriptionView(text: "Version 1.22", useBlack: true)
+                    SettingsDescriptionView(text: "Version 1.40", useBlack: true)
                 } //GROUPBOX
                 
 //                GroupBox(label: SettingsLabelView(labelText: "Beta Testing Settings", labelImage: "gearshape.2")) {

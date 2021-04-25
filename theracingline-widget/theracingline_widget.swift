@@ -42,7 +42,8 @@ struct Provider: TimelineProvider {
         let thisWeekSessions = DataController.shared.getRacesForWidget()
         let userAccessLevel = DataController.shared.getUserAccessLevelForWidget()
         
-        var entry = SessionEntry(date: Date(), sessions: [testSession1], userAccessLevel: userAccessLevel)
+        let temporaryAccessLevel = 3
+        var entry = SessionEntry(date: Date(), sessions: [testSession1, testSession2, testSession3, testSession4, testSession5, testSession6, testSession7], userAccessLevel: temporaryAccessLevel)
         
         if thisWeekSessions.count > 0 {
             entry = SessionEntry(date: Date(), sessions: thisWeekSessions, userAccessLevel: userAccessLevel)
@@ -55,9 +56,10 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SessionEntry] = []
+        let today = Date()
+        var fifteenMinutes = Date() + 15.minutes
         
         // get all the details needed from User Defaults
-        
         let thisWeekSessions = DataController.shared.getRacesForWidget()
         let userAccessLevel = DataController.shared.getUserAccessLevelForWidget()
         let visibleSeriesList = DataController.shared.getVisibleSeriesPreferencesForWidget()
@@ -68,42 +70,79 @@ struct Provider: TimelineProvider {
         // filter by visible races
         let visibleSeries = seriesAllowedBySubscription.filter { visibleSeriesList.contains($0.series) }
         
+        // filter by series that have not happened yet.
+        let seriesToGo = visibleSeries.filter { $0.date >= today }
+        
         // cut this array down to
-        let sessionsArray = Array(visibleSeries.prefix(100))
+        let sessionsArray = Array(seriesToGo.prefix(100))
         
         // for each of the mini arrays in the main array
-        for index in 0 ..< sessionsArray.count {
-            
-            var currentDate = Date()
-            
-            // DATE OF ENTRY
-            if index == 0 {
-                // for first race use current date
-                currentDate = Date()
-            } else {
-                // for second race, use the first race start time + 1 hour
-                currentDate = sessionsArray[index].date
-            }
-            
-            // SESSIONS OF ENTRY
-
-            var entry: SessionEntry
-            if index == 0 {
-                // for first race use all
-                entry = SessionEntry(date: currentDate, sessions: sessionsArray, userAccessLevel: userAccessLevel)
-            } else {
-                // for second race take off the first
-                let numberOfRacesToDrop = index
-                let numberOfRaces = sessionsArray.count
-                let slicedArray = Array(sessionsArray.suffix(numberOfRaces - numberOfRacesToDrop))
-                
-                entry = SessionEntry(date: currentDate, sessions: slicedArray, userAccessLevel: userAccessLevel)
-            }
-            
-            entries.append(entry)
+//        for index in 0 ..< sessionsArray.count {
+//
+//            var sessionDate = Date()
+//            var entry: SessionEntry
+//
+//
+//            // DATE OF ENTRY
+//            if index == 0 {
+//                // for first race use current date
+//                sessionDate = Date()
+//
+//                // for first race use all
+//                entry = SessionEntry(date: sessionDate, sessions: sessionsArray, userAccessLevel: userAccessLevel)
+//
+//            } else {
+//                // for second race, use the first race start time + 1 hour
+//                sessionDate = sessionsArray[index-1].date
+////                sessionDate = sessionDate + 1.hours
+//
+//                // for second race take off the first
+//                let numberOfRacesToDrop = index
+//                let numberOfRaces = sessionsArray.count
+//                let slicedArray = Array(sessionsArray.suffix(numberOfRaces - numberOfRacesToDrop))
+//
+//
+//                entry = SessionEntry(date: sessionDate, sessions: slicedArray, userAccessLevel: userAccessLevel)
+//            }
+//
+//            entries.append(entry)
+//        }
+        
+        let entry: SessionEntry
+        
+        if sessionsArray.count != 0 {
+            entry = SessionEntry(date: today, sessions: sessionsArray, userAccessLevel: userAccessLevel)
+        } else {
+            entry = SessionEntry(date: today, sessions: [noSessions], userAccessLevel: userAccessLevel)
+            fifteenMinutes = Date() + 1.minutes
         }
+        
+        entries.append(entry)
+        
+        
+        // get midnight tomorrow for a refresh
+//        let calendar = Calendar.current
+//
+//        let tomorrow = today + 1.days
+//        let tomorrowDay = calendar.component(.day, from: tomorrow)
+//        let tomorrowMonth = calendar.component(.month, from: tomorrow)
+//        let tomorrowYear = calendar.component(.year, from: tomorrow)
+//
+//        let dateComponents = DateComponents(calendar: calendar, year: tomorrowYear, month: tomorrowMonth, day: tomorrowDay)
+//
+//        let tomorrowMidnight = calendar.date(from: dateComponents)!
+//        let oneMinuteAway = Date() + 1.minutes
+//        let updateTime: Date
+//
+//        if entries.count == 0 {
+//            let entry = SessionEntry(date: Date(), sessions: [noSessions], userAccessLevel: userAccessLevel)
+//            entries.append(entry)
+//            updateTime = oneMinuteAway
+//        } else {
+//            updateTime = tomorrowMidnight
+//        }
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let timeline = Timeline(entries: entries, policy: .after(fifteenMinutes))
         completion(timeline)
     }
 }
@@ -119,34 +158,36 @@ struct theracingline_widgetEntryView : View {
     @Environment(\.widgetFamily) private var widgetFamily
     var entry: Provider.Entry
 
+    
     var body: some View {
-        
+            
         // get maximum visible for the specific widget size
-        let maxVisible = getMaxVisible()
+        let maxValues = getMaxVisible()
+        let maxVisible = maxValues[0]
+        let maxDots = maxValues[1]
         
         VStack() {
+            
             HStack {
-                if checkIfAllRacesAreThisToday(sessions: entry.sessions) {
-                    Text("TODAY")
-                        .bold()
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                    Spacer()
-                    Image(systemName: "\(currentDate).square")
-
-                } else {
+                if entry.sessions[0].sessionName == "NoSessions" || !checkIfAllRacesAreThisToday(sessions: entry.sessions){
                     Text("THIS WEEK")
                         .bold()
                         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                     Spacer()
                     Image(systemName: "calendar")
-
+                } else {
+                    Text("TODAY")
+                        .bold()
+                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    Spacer()
+                    Image(systemName: "\(currentDate).square")
                 }
             } //HSTACK
             .font(.subheadline)
             .padding(.bottom, -2)
 
             // if there are races
-            if entry.sessions.count > 0 {
+            if entry.sessions[0].sessionName != "NoSessions" {
                 
                 // the list of races
                 ForEach(Array(entry.sessions.enumerated()), id: \.1) { i, element in
@@ -165,25 +206,52 @@ struct theracingline_widgetEntryView : View {
                                 .frame(width: 8)
                             VStack {
                                 HStack{
-                                    Text(element.series)
-                                        .font(.system(size: 10))
-                                    Spacer()
-//                                    if entry.userAccessLevel >= 3 {
-                                        if widgetFamily != .systemSmall {
-                                            Text(element.timeAsString())
+                                    if widgetFamily == .systemSmall {
+                                        if element.sessionType == "R" {
+                                            Text("\(element.series) - R")
+                                                .font(.system(size: 10))
+                                        } else if element.sessionType == "Q"{
+                                            Text("\(element.series) - Q")
+                                                .font(.system(size: 10))
+                                        } else {
+                                            Text("\(element.series)")
                                                 .font(.system(size: 10))
                                         }
-//                                    }
+                                    } else {
+                                        if element.sessionType == "R" {
+                                            Text("\(element.series) - Race")
+                                                .font(.system(size: 10))
+                                        } else if element.sessionType == "Q"{
+                                            Text("\(element.series) - Qualifying")
+                                                .font(.system(size: 10))
+                                        } else {
+                                            Text("\(element.series)")
+                                                .font(.system(size: 10))
+                                        }
+                                    }
+ 
+                                    Spacer()
+                                    if entry.userAccessLevel >= 3 {
+                                        if widgetFamily != .systemSmall {
+                                            if(element.tba){
+                                                Text("Time TBA")
+                                                    .font(.system(size: 10))
+                                            } else {
+                                                Text(element.timeAsString())
+                                                    .font(.system(size: 10))
+                                            }
+                                        }
+                                    }
                                 }
                                 HStack{
                                     Text(element.circuit)
                                         .font(.system(size: 10))
                                     Spacer()
-//                                    if entry.userAccessLevel >= 3 {
+                                    if entry.userAccessLevel >= 3 {
                                         if widgetFamily != .systemSmall {
                                             Text("\(element.day()) - \(element.dateAsString())")
                                                 .font(.system(size: 10))
-//                                        }
+                                        }
                                     }
                                 } // HSTACK
                             } // VSTACK
@@ -195,43 +263,13 @@ struct theracingline_widgetEntryView : View {
                 
                 // the dots for races
                 // if there are more races than can be displayed on the widget
-                if entry.sessions.count > maxVisible {
-                    
-                    // number of additional races to be displayed in the dots
-                    let count = entry.sessions.count - maxVisible
-                    
-                    HStack {
-                        Text("+\(count)")
-                            .font(.system(size: 10))
-                        
-                        // for each race that could not be displayed in full
-                        
-                        
-                        
-                        ForEach(Array(entry.sessions.enumerated()), id: \.1) { i, element in
-                            
-                            // set
-                            if i >= maxVisible {
-                                if ((i < 9 && widgetFamily == .systemSmall) || (i < 15 && widgetFamily != .systemSmall)) {
-                                    let gradientStart = Color(red: element.darkR / 255, green: element.darkG / 255, blue: element.darkB / 255)
-                                    let gradientEnd = Color(red: element.lightR / 255, green: element.lightG / 255, blue: element.lightB / 255)
-                                    Circle()
-                                        .fill(LinearGradient(
-                                              gradient: .init(colors: [gradientStart, gradientEnd]),
-                                              startPoint: .init(x: 0.5, y: 0),
-                                              endPoint: .init(x: 0.5, y: 0.6)
-                                            ))
-                                        .frame(width: 8, height: 8)
-                                }
-                            }
-                        } // FOREACH FOR LIST
-                        Spacer()
-                    } // HSTACK
-                } // DOTS
+                dotsRow(sessions: entry.sessions, maxVisible: maxVisible, maxDots: maxDots)
+
+                
                 Spacer()
             } else {
                 // display no coming soon events
-                Text("No Races Soon")
+                widgetNoRaces()
             }
            
         } //VSTACK
@@ -247,17 +285,74 @@ struct theracingline_widgetEntryView : View {
         return day
     }
     
-    func getMaxVisible() -> Int {
+    func getMaxVisible() -> [Int] {
             
         switch widgetFamily {
             case .systemSmall:
-                return 3
+                switch UIScreen.main.bounds.size {
+                    case CGSize(width: 390, height: 844): // 12, 12 Pro
+                        return [3,9]
+//                    case CGSize(width: 360, height: 780): // 12 Mini
+//                        return [3,9]
+                    case CGSize(width: 428, height: 926): // 12 Pro Max
+                        return [3,9]
+                    case CGSize(width: 414, height: 896): // 11 Pro Max, 11, XR,
+                        return [3,9]
+                    case CGSize(width: 375, height: 812): // 11 Pro, XS, X, 12 mini
+                        return [3,9]
+                    case CGSize(width: 414, height: 736): // 8 Plus, 7 Plus, 6S Plus
+                        return [3,9]
+                    case CGSize(width: 375, height: 667): // SE2, 8, 7, 6S
+                        return [3,8]
+                    case CGSize(width: 320, height: 568): // SE
+                        return [3,8]
+                    default:
+                        return [3,8]
+                }
             case .systemMedium:
-                return 3
+                switch UIScreen.main.bounds.size {
+                    case CGSize(width: 390, height: 844): // 12, 12 Pro
+                        return [3,20]
+//                    case CGSize(width: 360, height: 780): // 12 Mini
+//                        return [3,20]
+                    case CGSize(width: 428, height: 926): // 12 Pro Max
+                        return [3,20]
+                    case CGSize(width: 414, height: 896): // 11 Pro Max, 11, XR,
+                        return [3,20]
+                    case CGSize(width: 375, height: 812): // 11 Pro, XS, X, 12 mini
+                        return [3,20]
+                    case CGSize(width: 414, height: 736): // 8 Plus, 7 Plus, 6S Plus
+                        return [3,20]
+                    case CGSize(width: 375, height: 667): // SE2, 8, 7, 6S
+                        return [3,19]
+                    case CGSize(width: 320, height: 568): // SE
+                        return [3,17]
+                    default:
+                        return [3,17]
+                }
             case .systemLarge:
-                return 10
+                switch UIScreen.main.bounds.size {
+                    case CGSize(width: 390, height: 844): // 12, 12 Pro
+                        return [10,25]
+//                    case CGSize(width: 360, height: 780): // 12 Mini
+//                        return [9,20]
+                    case CGSize(width: 428, height: 926): // 12 Pro Max
+                        return [11,25]
+                    case CGSize(width: 414, height: 896): // 11 Pro Max, 11, XR,
+                        return [11,25]
+                    case CGSize(width: 375, height: 812): // 11 Pro, XS, X, 12 mini
+                        return [10,25]
+                    case CGSize(width: 414, height: 736): // 8 Plus, 7 Plus, 6S Plus
+                        return [10,25]
+                    case CGSize(width: 375, height: 667): // SE2, 8, 7, 6S
+                        return [9,23]
+                    case CGSize(width: 320, height: 568): // SE
+                        return [9,23]
+                    default:
+                        return [10,20]
+                }
         @unknown default:
-            return 3
+            return [3,9]
         }
     }
     
@@ -274,8 +369,8 @@ struct theracingline_widget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             theracingline_widgetEntryView(entry: entry)
         }
-        .configurationDisplayName("The Racing Line Widhet")
-        .description("See upcoming events!")
+        .configurationDisplayName("This Weeks Events")
+        .description("List of this weeks events")
     }
 }
 
@@ -336,3 +431,5 @@ extension Array {
         }
     }
 }
+
+

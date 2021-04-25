@@ -23,3 +23,4 @@ struct AllRacesView_Previews: PreviewProvider {
         AllRacesView(storeManager: StoreManager())
     }
 }
+

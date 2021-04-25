@@ -24,26 +24,26 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
     @Published var myProducts = [SKProduct]()
     
     func getProducts(productIDs: [String]) {
-        print("Start requesting products ...")
+//        print("Start requesting IAP products...")
         let request = SKProductsRequest(productIdentifiers: Set(productIDs))
         request.delegate = self
         request.start()
     }
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        print("Did receive response")
+//        print("Did receive list of IAPs")
         
         if !response.products.isEmpty {
-            print(response.products.count)
+//            print("\(response.products.count) IAP Found")
             for fetchedProduct in response.products {
-                print("IAP Found")
-                print(fetchedProduct.localizedTitle)
+//                print("IAP Found")
+//                print(fetchedProduct.localizedTitle)
                 DispatchQueue.main.async {
                     self.myProducts.append(fetchedProduct)
                 }
             }
         }
-        print(response.invalidProductIdentifiers.count)
+//        print("\(response.invalidProductIdentifiers.count) invalid IAP Found")
         for invalidIdentifier in response.invalidProductIdentifiers {
             print("Invalid identifiers found: \(invalidIdentifier)")
         }
@@ -94,7 +94,7 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
     }
     
     func restoreProducts() {
-        print("Restoring products ...")
+//        print("Restoring products ...")
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
@@ -134,37 +134,37 @@ class StoreManager: NSObject, ObservableObject, SKProductsRequestDelegate, SKPay
                 if let receipt = try? InAppReceipt.localReceipt(){
                     if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.annual", forDate: Date()) {
                         // user has subscription of the product, which is still active at the specified date
-                        print("Annual Found")
+//                        print("Active Annual Found")
                         self.annualSub = true
                         self.monthlySub = false
                         self.data.setUserAccessLevel(newAccessLevel: 3)
                         
                     } else if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.gold", forDate: Date()) {
                         // user has subscription of the product, which is still active at the specified date
-                        print("Monthly Sub Found")
+//                        print("Active Monthly Sub Found")
                         self.monthlySub = true
                         self.annualSub = false
                         self.data.setUserAccessLevel(newAccessLevel: 3)
                         
                     } else if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.silver", forDate: Date()) {
                         // user has subscription of the product, which is still active at the specified date
-                        print("Silver Sub Found")
+//                        print("Active Silver Sub Found")
                         self.annualSub = false
                         self.monthlySub = false
                         self.data.setUserAccessLevel(newAccessLevel: 2)
                         
                     } else if receipt.hasActiveAutoRenewableSubscription(ofProductIdentifier: "dev.daveellis.theracingline.bronze", forDate: Date()) {
                         // user has subscription of the product, which is still active at the specified date
-                        print("Bronze Sub Found")
+//                        print("Active Bronze Sub Found")
                         self.annualSub = false
                         self.monthlySub = false
                         self.data.setUserAccessLevel(newAccessLevel: 1)
                         
                     } else {
-                        print("No Sub Found")
+//                        print("No Active Sub Found")
                         self.annualSub = false
                         self.monthlySub = false
-                        self.data.userAccessLevel = 0
+                        self.data.setUserAccessLevel(newAccessLevel: 0)
                     }
                 }
             }

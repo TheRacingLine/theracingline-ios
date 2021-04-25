@@ -22,7 +22,7 @@ class NotificationController: ObservableObject {
     func requestPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
-                print("Notifications Allowed")
+//                print("Notifications Allowed")
                 self.rebuildNotifications()
             } else if let error = error {
                 print(error.localizedDescription)
@@ -32,9 +32,9 @@ class NotificationController: ObservableObject {
     
     func rebuildNotifications(){
         
-        print("Rebuilding notifications")
-        print("Notification offset set to \(self.notificationOffset1)")
-        
+//        print("Rebuilding notifications")
+//        print("Notification offset set to \(self.notificationOffset1)")
+//        
         let fullSessionList = data.allSessions
 
         // clear notifications
@@ -50,7 +50,7 @@ class NotificationController: ObservableObject {
             
             //loop through remaining sessions and set notifications
             for (index, session) in sessionsFilteredByNotifications.enumerated() {
-                if index < 41 {
+                if index < 40 && session.tba == false {
                     setNotifictions(session: session)
                 }
             }
@@ -60,21 +60,34 @@ class NotificationController: ObservableObject {
     func filterSeriesByPreferences(sessions: [Session]) -> [Session] {
         let seriesWithNotifications = data.seriesWithNotifications
         
-        return sessions.filter { seriesWithNotifications.contains($0.series) }
+        return sessions.filter { seriesWithNotifications.contains($0.series) && $0.tba == false }
     }
     
     func setReminderNotificaton() {
-        print("Weekly notification being set.")
+//        print("Weekly notification being set.")
         let content = UNMutableNotificationContent()
         content.title = "See What's On This Week"
-        content.body = "Remember to open the app once a week to update race data and start time notifications"
+        content.body = "Open the app once a week to update race data and start time notifications"
         
+        
+        // extra from current date
+        // add 5 days to current date
+        let today = Date()
+        let fiveDays = today + 5.days
+        let todayCalendar = Calendar.current
+        
+        let fiveDayComponent = todayCalendar.component(.weekday, from: fiveDays)
+        let hourComponent = todayCalendar.component(.hour, from: fiveDays)
+        let minuteComponent = todayCalendar.component(.minute, from: fiveDays)
+
+        // create date for notification
         var dateComponents = DateComponents()
         dateComponents.calendar = Calendar.current
 
-        dateComponents.weekday = 5
-        dateComponents.hour = 12
-        
+        dateComponents.weekday = fiveDayComponent
+        dateComponents.hour = hourComponent
+        dateComponents.minute = minuteComponent
+
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         // Create the request
@@ -173,7 +186,7 @@ class NotificationController: ObservableObject {
                     let decoder = JSONDecoder()
                     if let jsonNotification = try? decoder.decode(Int.self, from: data) {
                         DispatchQueue.main.async{
-                            print("Notification offset set to \(self.notificationOffset1)")
+//                            print("Notification offset set to \(self.notificationOffset1)")
                             self.notificationOffset1 = jsonNotification
                         }
                     }

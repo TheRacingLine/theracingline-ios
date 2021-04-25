@@ -11,6 +11,7 @@ struct theracinglineHomeView: View {
     
     @StateObject var storeManager: StoreManager
     @ObservedObject var data = DataController.shared
+
     
     var body: some View {
         TabView {

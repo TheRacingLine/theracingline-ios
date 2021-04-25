@@ -35,7 +35,6 @@ struct FAQView: View {
                     Divider().padding(.vertical, 4)
                     SettingsDescriptionView(text: "Unfortunately the amount of work required to do this is too high at the moment. I may re-evaluate this as time goes on.", useBlack: true)
                 } //GROUPBOX
-                
             } //VSTACK
             .padding()
         } //SCROLLVIEW

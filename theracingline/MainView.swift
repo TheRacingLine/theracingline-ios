@@ -28,8 +28,6 @@ struct MainView: View {
     
     var body: some View {
         
-        
-        
         if !isOnboarding {
             
             // iPhone layout
@@ -82,9 +80,6 @@ struct MainView: View {
         // get the session data stored on the device
         data.loadData()
         
-        // load notification preferences stored on the device
-        data.getNotificationPreferences()
-        
         // load the visibile series preferences stored on the device
         data.getVisibleSeriesPreferences()
         
@@ -93,6 +88,9 @@ struct MainView: View {
         
         // load notification offset preferences
         notifications.loadNotificationTime(notificationNumber: 1)
+        
+        // load notification preferences stored on the device
+        data.getNotificationPreferences()
         
         // download new data //
 
@@ -104,9 +102,6 @@ struct MainView: View {
         
         // setup visible series list
         data.initiliseVisibleSeries()
-        
-        // setup notifications
-        data.initiliseNotificationSettings()
         
         storeManager.restoreSubscriptionStatus()
     }
@@ -121,9 +116,6 @@ struct MainView: View {
         
         // get subscription status
         storeManager.restoreSubscriptionStatus()
-        
-        // setup notifications
-        data.initiliseNotificationSettings()
 
     }
 }
@@ -131,5 +123,38 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+    }
+}
+
+extension ScrollView {
+    
+    public func fixFlickering() -> some View {
+        
+        return self.fixFlickering { (scrollView) in
+            
+            return scrollView
+        }
+    }
+    
+    public func fixFlickering<T: View>(@ViewBuilder configurator: @escaping (ScrollView<AnyView>) -> T) -> some View {
+        
+        GeometryReader { geometryWithSafeArea in
+            GeometryReader { geometry in
+                configurator(
+                ScrollView<AnyView>(self.axes, showsIndicators: self.showsIndicators) {
+                    AnyView(
+                    VStack {
+                        self.content
+                    }
+                    .padding(.top, geometryWithSafeArea.safeAreaInsets.top)
+                    .padding(.bottom, geometryWithSafeArea.safeAreaInsets.bottom)
+                    .padding(.leading, geometryWithSafeArea.safeAreaInsets.leading)
+                    .padding(.trailing, geometryWithSafeArea.safeAreaInsets.trailing)
+                    )
+                }
+                )
+            }
+            .edgesIgnoringSafeArea(.all)
+        }
     }
 }
