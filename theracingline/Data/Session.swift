@@ -126,71 +126,14 @@ class Session: ObservableObject, Identifiable, Codable, Equatable, Hashable {
     
     func timeFromNow() -> String {
         
-        return self.date.toRelative()
-        
-//        let currentDateTime = Date()
-//        let raceDayMidnight = Calendar.current.date(bySettingHour: 9, minute: 30, second: 0, of: self.date)!
-//
-//        let diffMinuteComponents = Calendar.current.dateComponents([.minute], from: currentDateTime, to: self.date)
-//        let diffMinutes = diffMinuteComponents.minute
-//
-//        let diffHourComponents = Calendar.current.dateComponents([.hour], from: currentDateTime, to: self.date)
-//        let diffHour = diffHourComponents.hour
-//
-//        let diffDayComponents = Calendar.current.dateComponents([.day], from: currentDateTime, to: raceDayMidnight)
-//        let diffDay = diffDayComponents.day
-//
-//        let diffMonthComponents = Calendar.current.dateComponents([.month], from: currentDateTime, to: self.date)
-//        let diffMonth = diffMonthComponents.month
-//
-//        let diffYearComponents = Calendar.current.dateComponents([.year], from: currentDateTime, to: self.date)
-//        let diffYear = diffYearComponents.year
-//
-//
-//        if diffHour! <= 0 {
-//            // less than 1 hour, show minutes
-//
-//            if diffMinutes! <= 0 {
-//                // less than 1 minute, show started
-//                return ("started")
-//            } else if diffMinutes! == 1 {
-//                return "in \(diffMinutes!) minute"
-//            }
-//            return "in \(diffMinutes!) minutes"
-//
-//        } else if diffDay! <= 0 {
-//            //less than 1 day, show hours
-//            if diffHour! == 1 {
-//                return "in \(diffHour!) hour"
-//            }
-//            return "in \(diffHour!) hours"
-//        } else if diffDay! < 14 {
-//            // less than 2 weeks, show days
-//            if diffDay! == 1 {
-//                return "tomorrow"
-//            } else {
-//
-//                return "in \(diffDay!) days"
-//            }
-//        } else if diffMonth! <= 0 {
-//            // less than 1 month, show weeks
-//            let weeks = diffDay! / 7
-//            return "in \(weeks) weeks"
-//        } else if diffYear == 0 {
-//            // less than 1 year, show months
-//            if diffMonth! == 1 {
-//                return "next month"
-//            } else {
-//                return "in \(diffMonth!) months"
-//            }
-//        } else if diffYear! > 1 {
-//            return "next year"
-//        }
-//
-//        return " "
+          return self.date.toRelative()
     }
     
     func getDurationText() -> String {
+        
+        if duration == 0 {
+            return "- TBA Distance"
+        }
         
         if durationType == "T" {
             var durationIsMinutes: Bool
@@ -230,9 +173,11 @@ class Session: ObservableObject, Identifiable, Codable, Equatable, Hashable {
         } else if durationType == "DM" {
             return "- \(duration) Miles"
         } else if durationType == "DKM" {
-            return "- \(durationType) km"
+            return "- \(duration) km"
         } else if durationType == "NO"{
             return ""
+        } else if durationType == "AD"{
+            return "All Day Event"
         } else {
             return "- Unknown duration"
         }
@@ -254,10 +199,29 @@ class Session: ObservableObject, Identifiable, Codable, Equatable, Hashable {
         return self.date + minutesToGMT.minutes
     }
     
+    func hasPassed() -> Bool {
+        let currentDateTime = Date()
+        
+        if self.date < currentDateTime {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func isSessionMoreThanDayOld() -> Bool {
+        let tweleveHoursAgo = Date() - 12.hours
+        
+        if self.date < tweleveHoursAgo {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
     
 }
 
@@ -280,7 +244,7 @@ var testSession1: Session {
     session.roundNumber = 14
     session.durationType = "L"
     session.duration = 58
-    session.date = Date() + 30.minutes
+    session.date = Date() - 30.minutes
     session.tba = false
 
     return session
@@ -432,6 +396,56 @@ var testSession7: Session {
     session.durationType = "L"
     session.duration = 45
     session.date = Date() + 2.hours + 45.minutes
+    session.tba = false
+
+    return session
+}
+
+var testSession8: Session {
+    let session = Session()
+
+    session.series = "WRC"
+    session.accessLevel = 0
+    session.darkR = 199.0
+    session.darkG = 3.0
+    session.darkB = 14.0
+    session.lightR = 170.0
+    session.lightG = 0.0
+    session.lightB = 10.0
+    session.seriesType = "Rally"
+    session.event = 10
+    session.circuit = "Rally GB"
+    session.sessionName = "Race"
+    session.sessionType = "R"
+    session.roundNumber = 10
+    session.durationType = "AD"
+    session.duration = 1
+    session.date = Date() + 7.hours + 45.minutes
+    session.tba = false
+
+    return session
+}
+
+var testSession9: Session {
+    let session = Session()
+
+    session.series = "WRC"
+    session.accessLevel = 0
+    session.darkR = 199.0
+    session.darkG = 3.0
+    session.darkB = 14.0
+    session.lightR = 170.0
+    session.lightG = 0.0
+    session.lightB = 10.0
+    session.seriesType = "Rally"
+    session.event = 10
+    session.circuit = "Rally GB"
+    session.sessionName = "Race"
+    session.sessionType = "R"
+    session.roundNumber = 10
+    session.durationType = "AD"
+    session.duration = 1
+    session.date = Date() - 2.hours + 45.minutes
     session.tba = false
 
     return session

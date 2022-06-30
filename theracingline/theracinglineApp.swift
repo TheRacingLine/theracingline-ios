@@ -11,15 +11,13 @@ import StoreKit
 @main
 struct theracinglineApp: App {
     
-    
-
     var body: some Scene {
 
         WindowGroup {
             MainView()
                 .onAppear() {
                     PhoneToWatchDataController.shared.setupWCSession()
-                }
+                } //MAINVIEW
         } //WINDOWGROUP
     }
 }

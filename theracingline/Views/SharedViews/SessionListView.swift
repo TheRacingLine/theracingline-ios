@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct SessionListView: View {
     
@@ -14,13 +15,12 @@ struct SessionListView: View {
     
     @State private var searchText = ""
     @State private var showCancelButton: Bool = false
+    @State private var showingFilterSheet = false
     
     var sessions: [Session]
     var noSessionText: String
     
     var body: some View {
-
-        
         ScrollView {
             HStack {
                 HStack {
@@ -51,9 +51,35 @@ struct SessionListView: View {
                     }
                     .foregroundColor(Color(.systemBlue))
                 }
+                
+                Button(action: {
+                    showingFilterSheet.toggle()
+                }) {
+                    if filtersApplied() {
+                        ZStack{
+                            Image(systemName: "line.horizontal.3.decrease.circle.fill")
+                                .font(.system(size: 26))
+                                .foregroundColor(.blue)
+                            Circle()
+                                .fill(Color.red)
+                                .frame(width: 10, height: 10)
+                                .padding(.bottom)
+                                .padding(.leading)
+                        }
+                        
+                    } else {
+                        Image(systemName: "line.horizontal.3.decrease.circle")
+                            .font(.system(size: 26))
+                            .foregroundColor(.blue)
+                    }
+                    
+                }.sheet(isPresented: $showingFilterSheet){
+                    FilterView()
+                }
             }
             .padding(.horizontal)
             .padding(.vertical, 2)
+            .padding(.top, 8)
 //            .navigationBarHidden(showCancelButton)
 //            .animation(.default) // animation does not work properly
             
@@ -84,9 +110,7 @@ struct SessionListView: View {
                     } // FOREACH
                 } // IFELSE
                 
-                if data.userAccessLevel < 2 {
-                    MoreSeriesButton(storeManager: storeManager, buttonText: "More Series")
-                } else if data.userAccessLevel < 3 {
+                if data.userAccessLevel < 3 {
                     MoreSeriesButton(storeManager: storeManager, buttonText: "More Details")
                 }
             } // VSTACK
@@ -127,6 +151,15 @@ struct SessionListView: View {
         return Array(Set(searchArray))
     }
     
+    func filtersApplied() -> Bool {
+        if data.filterSeriesSingleSeater == true && data.filterSeriesSportsCar == true && data.filterSeriesTouringCars == true && data.filterSeriesStockCars == true && data.filterSeriesRally == true && data.filterSeriesBikes == true && data.filterSeriesOther == true && data.filterSessionRace == true && data.filterSessionQualifying == true && data.filterSessionPractice == true && data.filterStartDate <= Date() && data.filterEndDate > Date() + 6.months {
+            //
+            return false
+        } else {
+            return true
+        }
+    }
+    
     
 }
 
@@ -159,10 +192,3 @@ extension View {
         return modifier(ResignKeyboardOnDragGesture())
     }
 }
-
-//                        searchArray(searchString: searchText).contains(where: $0.circuit.lowercased().contains) || searchArray(searchString: searchText).contains(where: $0.series.lowercased().contains) || searchArray(searchString: searchText).contains(where: $0.seriesType.lowercased().contains) || searchArray(searchString: searchText).contains(where: $0.sessionName.lowercased().contains) || searchText == ""
-
-
-//$0.circuit.lowercased().contains(searchText.lowercased()) || $0.circuit.lowercased().hasPrefix(searchText.lowercased())
-//searchArray(searchString: searchText.lowercased()).contains(where: $0.circuit.lowercased().contains) || searchText.isEmpty
-// includeSession(session: $0)

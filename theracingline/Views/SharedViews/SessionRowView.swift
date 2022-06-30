@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct SessionRowView: View {
     
     @ObservedObject var data = DataController.shared
-    @Environment(\.colorScheme) var colorScheme
     
     var session: Session
 
@@ -28,66 +28,57 @@ struct SessionRowView: View {
                       endPoint: .init(x: 0.5, y: 0.6)
                     ))
                 .frame(width: 8)
-            VStack(alignment: .leading, spacing: 5) {
-                Text(session.series)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(hasSessionPassed(session: session))
-                    
-                    if data.userAccessLevel < 3 || session.sessionType != "R" {
-                        Text("\(session.circuit) - \(session.sessionName)")
-                            .font(.caption)
-                            .foregroundColor(Color.secondary)
-                    } else {
-                        if session.duration == 0 {
-                            Text("\(session.circuit) - \(session.sessionName) - TBA Distance")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        } else {
-                            Text("\(session.circuit) - \(session.sessionName) \(session.getDurationText())")
-                                .font(.caption)
-                                .foregroundColor(Color.secondary)
-                        }
-                    }
-                HStack{
-                    if data.userAccessLevel < 3 {
-                        Text("\(session.day()) \(session.dateAsString())")
-                    } else {
-                        if session.tba {
-                            Text("\(session.day()) \(session.dateAsString()) - Time TBA")
-                        } else {
-                            Text("\(session.day()) \(session.dateAsString()) - \(session.timeAsString())")
-                        }
-                    }
-                    Spacer()
-                    if data.userAccessLevel >= 3 {
-                        Text(session.timeFromNow())
-                        Image(systemName: "clock.fill")
-                    }
-                    
-                } // HStack
-                .font(.caption)
-                .foregroundColor(Color.secondary)
-            } // VSTACK
-        } //HSTACK
+            
+            // IF SESSION HAS PASSED COMPRESS ROW
+            if session.hasPassed() {
+                SessionRowFinished(session: session)
+            } else {
+                SessionRowUpcoming(session: session)
+            }
+        }//HSTACK
         .padding(.bottom, 4)
     }
     
-    func hasSessionPassed(session: Session) -> Color {
+    func hasSessionPassedBool(session: Session) -> Bool {
         let currentDateTime = Date()
 
         if session.date < currentDateTime {
-            return colorScheme == .dark ? Color(red: 1, green: 1, blue: 1, opacity: 0.25) : Color(red: 0, green: 0, blue: 0, opacity: 0.25)
+            return true
         } else {
-            return colorScheme == .dark ? Color.white : Color.black
+            return false
+        }
+    }
+    
+    func isSessionMoreThanDayOld(session: Session) -> Bool {
+        let tweleveHoursAgo = Date() - 12.hours
+        
+        if session.date < tweleveHoursAgo {
+            return true
+        } else {
+            return false
         }
     }
 }
 
 struct SessionRowView_Previews: PreviewProvider {
     static var previews: some View {
+        SessionRowView(session: testSession8)
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .frame(height: 100)
+        SessionRowView(session: testSession2)
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .frame(height: 100)
         SessionRowView(session: testSession1)
             .previewLayout(.sizeThatFits)
             .padding()
+            .frame(height: 100)
+        SessionRowView(session: testSession9)
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .frame(height: 100)
     }
+    
+    
 }

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55726464283BE10100578F96 /* UpcomingRace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55726463283BE10100578F96 /* UpcomingRace.swift */; };
+		55726466283BE25800578F96 /* FinishedRace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55726465283BE25800578F96 /* FinishedRace.swift */; };
+		558491B6284531ED0034401F /* SessionRowFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558491B5284531ED0034401F /* SessionRowFinished.swift */; };
+		558491B92845397B0034401F /* SessionRowUpcoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558491B82845397B0034401F /* SessionRowUpcoming.swift */; };
+		55C68173276FD7110057E408 /* widgetNoSub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C68172276FD7110057E408 /* widgetNoSub.swift */; };
+		55F3EB9C27F4E81F004B3E0D /* ConfigureNotificationSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F3EB9B27F4E81F004B3E0D /* ConfigureNotificationSessionView.swift */; };
+		55F3EB9E27F5036B004B3E0D /* SubscriptionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F3EB9D27F5036B004B3E0D /* SubscriptionOptions.swift */; };
+		55F3EBA027F73C1B004B3E0D /* SessionListNoFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F3EB9F27F73C1B004B3E0D /* SessionListNoFilterView.swift */; };
 		BB02D4F82571B25D003EAD83 /* ConfigurationNotificationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB02D4F72571B25D003EAD83 /* ConfigurationNotificationRowView.swift */; };
 		BB02D4FB257574D5003EAD83 /* ConfigurationSeriesRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB02D4FA257574D5003EAD83 /* ConfigurationSeriesRowView.swift */; };
 		BB02D50025759027003EAD83 /* AdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB02D4FF25759027003EAD83 /* AdView.swift */; };
@@ -88,6 +96,7 @@
 		BBD3A2D6255E9A2C005C19BB /* AllSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A2D5255E9A2C005C19BB /* AllSeriesView.swift */; };
 		BBD3A2DF255EA502005C19BB /* SeriesSessionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A2DE255EA502005C19BB /* SeriesSessionRowView.swift */; };
 		BBD3A2E2255EA621005C19BB /* SeriesSessionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD3A2E1255EA621005C19BB /* SeriesSessionListView.swift */; };
+		BBE0B02E26FFB493003CE0B4 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE0B02D26FFB493003CE0B4 /* FilterView.swift */; };
 		BBE1B82D25A0BA7F00BB9D23 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1B82C25A0BA7F00BB9D23 /* FAQView.swift */; };
 		BBE5DE5925E6DA8B00B4F93C /* widgetNoRaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5DE5825E6DA8B00B4F93C /* widgetNoRaces.swift */; };
 		BBE5DE6925E6E12500B4F93C /* dotsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE5DE6825E6E12500B4F93C /* dotsRow.swift */; };
@@ -157,6 +166,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		55726463283BE10100578F96 /* UpcomingRace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingRace.swift; sourceTree = "<group>"; };
+		55726465283BE25800578F96 /* FinishedRace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedRace.swift; sourceTree = "<group>"; };
+		558491B5284531ED0034401F /* SessionRowFinished.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRowFinished.swift; sourceTree = "<group>"; };
+		558491B82845397B0034401F /* SessionRowUpcoming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRowUpcoming.swift; sourceTree = "<group>"; };
+		55C68172276FD7110057E408 /* widgetNoSub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetNoSub.swift; sourceTree = "<group>"; };
+		55F3EB9B27F4E81F004B3E0D /* ConfigureNotificationSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureNotificationSessionView.swift; sourceTree = "<group>"; };
+		55F3EB9D27F5036B004B3E0D /* SubscriptionOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionOptions.swift; sourceTree = "<group>"; };
+		55F3EB9F27F73C1B004B3E0D /* SessionListNoFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionListNoFilterView.swift; sourceTree = "<group>"; };
 		BB02D4F72571B25D003EAD83 /* ConfigurationNotificationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationNotificationRowView.swift; sourceTree = "<group>"; };
 		BB02D4FA257574D5003EAD83 /* ConfigurationSeriesRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationSeriesRowView.swift; sourceTree = "<group>"; };
 		BB02D4FF25759027003EAD83 /* AdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdView.swift; sourceTree = "<group>"; };
@@ -237,6 +254,7 @@
 		BBD3A2D5255E9A2C005C19BB /* AllSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSeriesView.swift; sourceTree = "<group>"; };
 		BBD3A2DE255EA502005C19BB /* SeriesSessionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesSessionRowView.swift; sourceTree = "<group>"; };
 		BBD3A2E1255EA621005C19BB /* SeriesSessionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesSessionListView.swift; sourceTree = "<group>"; };
+		BBE0B02D26FFB493003CE0B4 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		BBE1B82C25A0BA7F00BB9D23 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
 		BBE5DE5825E6DA8B00B4F93C /* widgetNoRaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = widgetNoRaces.swift; sourceTree = "<group>"; };
 		BBE5DE6825E6E12500B4F93C /* dotsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dotsRow.swift; sourceTree = "<group>"; };
@@ -277,12 +295,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55726462283BE0E900578F96 /* RaceViews */ = {
+			isa = PBXGroup;
+			children = (
+				55726463283BE10100578F96 /* UpcomingRace.swift */,
+				55726465283BE25800578F96 /* FinishedRace.swift */,
+			);
+			path = RaceViews;
+			sourceTree = "<group>";
+		};
+		558491B7284539670034401F /* SessionRows */ = {
+			isa = PBXGroup;
+			children = (
+				558491B5284531ED0034401F /* SessionRowFinished.swift */,
+				558491B82845397B0034401F /* SessionRowUpcoming.swift */,
+			);
+			path = SessionRows;
+			sourceTree = "<group>";
+		};
 		BB54CBEE25616F7D008E7F28 /* SubscribeViews */ = {
 			isa = PBXGroup;
 			children = (
 				BB54CBF5256174D6008E7F28 /* SubscriptionLevelView.swift */,
 				BB54CBF825617AEC008E7F28 /* SubscriptionLevelList.swift */,
 				BB8C9DD6256DB5C900D79892 /* SubscriptionSeriesList.swift */,
+				55F3EB9D27F5036B004B3E0D /* SubscriptionOptions.swift */,
 			);
 			path = SubscribeViews;
 			sourceTree = "<group>";
@@ -294,6 +331,7 @@
 				BB02D4FA257574D5003EAD83 /* ConfigurationSeriesRowView.swift */,
 				BBE68A472579A82900208B3B /* ConfigureNotificationView.swift */,
 				BB54CBFE25617F6D008E7F28 /* ConfigureNotificationSeriesView.swift */,
+				55F3EB9B27F4E81F004B3E0D /* ConfigureNotificationSessionView.swift */,
 				BBE68A442579A35E00208B3B /* ConfigureNotificationTimeView.swift */,
 				BB02D4F72571B25D003EAD83 /* ConfigurationNotificationRowView.swift */,
 				BBBFEE7425B4494A00B95742 /* ConfigureSoundsView.swift */,
@@ -386,6 +424,7 @@
 				BBBFEE8725B61A6800B95742 /* Info.plist */,
 				BBE5DE5825E6DA8B00B4F93C /* widgetNoRaces.swift */,
 				BBE5DE6825E6E12500B4F93C /* dotsRow.swift */,
+				55C68172276FD7110057E408 /* widgetNoSub.swift */,
 			);
 			path = "theracingline-widget";
 			sourceTree = "<group>";
@@ -402,6 +441,7 @@
 		BBC6BD7D2618F8F3009BA4D6 /* TheRacingLineWatch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				55726462283BE0E900578F96 /* RaceViews */,
 				BBC6BD7E2618F8F3009BA4D6 /* theracinglineApp.swift */,
 				BBC6BD802618F8F3009BA4D6 /* ContentView.swift */,
 				BBC6BD9E2618FB2D009BA4D6 /* WatchListView.swift */,
@@ -517,10 +557,13 @@
 		BBD3A2DB255EA3D5005C19BB /* SharedViews */ = {
 			isa = PBXGroup;
 			children = (
+				558491B7284539670034401F /* SessionRows */,
 				BBD3A2C1255DE5E0005C19BB /* SessionListView.swift */,
+				55F3EB9F27F73C1B004B3E0D /* SessionListNoFilterView.swift */,
 				BBD3A2C4255DE8CA005C19BB /* SessionRowView.swift */,
 				BB8C9DD3256D9CC600D79892 /* MoreSeriesButton.swift */,
 				BB02D4FF25759027003EAD83 /* AdView.swift */,
+				BBE0B02D26FFB493003CE0B4 /* FilterView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -732,6 +775,7 @@
 				BBBFEE8425B61A6700B95742 /* theracingline_widget.swift in Sources */,
 				BBE5DE6925E6E12500B4F93C /* dotsRow.swift in Sources */,
 				BBE5DE5925E6DA8B00B4F93C /* widgetNoRaces.swift in Sources */,
+				55C68173276FD7110057E408 /* widgetNoSub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -745,8 +789,10 @@
 				BBC6BD812618F8F3009BA4D6 /* ContentView.swift in Sources */,
 				BBC6BD872618F8F3009BA4D6 /* ComplicationController.swift in Sources */,
 				BBC6BD7F2618F8F3009BA4D6 /* theracinglineApp.swift in Sources */,
+				55726466283BE25800578F96 /* FinishedRace.swift in Sources */,
 				BBC6BD9F2618FB2D009BA4D6 /* WatchListView.swift in Sources */,
 				BBC6BE2F261CD3BD009BA4D6 /* InfoView.swift in Sources */,
+				55726464283BE10100578F96 /* UpcomingRace.swift in Sources */,
 				BBC6BD852618F8F3009BA4D6 /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -765,9 +811,12 @@
 				BB54CBFF25617F6D008E7F28 /* ConfigureNotificationSeriesView.swift in Sources */,
 				BBD3A2A1255DD1FB005C19BB /* theracinglineHomeView.swift in Sources */,
 				BBD3A2C5255DE8CA005C19BB /* SessionRowView.swift in Sources */,
+				BBE0B02E26FFB493003CE0B4 /* FilterView.swift in Sources */,
 				BBE68A452579A35E00208B3B /* ConfigureNotificationTimeView.swift in Sources */,
 				BB781C1825619F5900186E74 /* SettingsLinkView.swift in Sources */,
 				BB54CBEC2561648D008E7F28 /* SettingsDescriptionView.swift in Sources */,
+				558491B6284531ED0034401F /* SessionRowFinished.swift in Sources */,
+				55F3EB9E27F5036B004B3E0D /* SubscriptionOptions.swift in Sources */,
 				BBD3A2CD255DFEB2005C19BB /* AllRacesView.swift in Sources */,
 				BBC6BDB52619ED09009BA4D6 /* PhoneToWatchDataController.swift in Sources */,
 				BBBF5D1F257C1C2F005F50F4 /* Reachability.swift in Sources */,
@@ -789,9 +838,11 @@
 				BB02D50025759027003EAD83 /* AdView.swift in Sources */,
 				BB78B75425F0085C0061E39A /* WidgetsFAQ.swift in Sources */,
 				BBD3A2C9255DFE0F005C19BB /* ThisWeekView.swift in Sources */,
+				55F3EBA027F73C1B004B3E0D /* SessionListNoFilterView.swift in Sources */,
 				BBD3A29F255DD1FB005C19BB /* theracinglineApp.swift in Sources */,
 				BBD3A2BE255DE377005C19BB /* TodayView.swift in Sources */,
 				BB217EA625A9ED64008B26AF /* theracinglineSideBarView.swift in Sources */,
+				558491B92845397B0034401F /* SessionRowUpcoming.swift in Sources */,
 				BB54CC0E256180FA008E7F28 /* TermsAndConditionsView.swift in Sources */,
 				BB6FD1A925A20193004F261D /* Keys.swift in Sources */,
 				BB54CC0825618077008E7F28 /* CoffeeView.swift in Sources */,
@@ -799,6 +850,7 @@
 				BBD3A2B1255DD4E5005C19BB /* Session.swift in Sources */,
 				BBBA2D672560589400DC466A /* SettingsLabelView.swift in Sources */,
 				BBE68A412579857C00208B3B /* TimePickerView.swift in Sources */,
+				55F3EB9C27F4E81F004B3E0D /* ConfigureNotificationSessionView.swift in Sources */,
 				BBD3A2D3255E906E005C19BB /* SeriesRowView.swift in Sources */,
 				BB54CC0225617FA0008E7F28 /* CustomiseView.swift in Sources */,
 				BBB275B92578285A0011FB58 /* Ad.swift in Sources */,
@@ -837,7 +889,7 @@
 				CODE_SIGN_ENTITLEMENTS = "theracingline-widgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 5D7DMNG452;
 				INFOPLIST_FILE = "theracingline-widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -846,7 +898,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.40;
+				MARKETING_VERSION = 1.48;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.daveellis.theracingline.theracingline-widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -864,7 +916,7 @@
 				CODE_SIGN_ENTITLEMENTS = "theracingline-widgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 5D7DMNG452;
 				INFOPLIST_FILE = "theracingline-widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -873,7 +925,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.40;
+				MARKETING_VERSION = 1.48;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.daveellis.theracingline.theracingline-widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -888,7 +940,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"TheRacingLineWatch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 5D7DMNG452;
 				ENABLE_PREVIEWS = YES;
@@ -898,7 +950,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.40;
+				MARKETING_VERSION = 1.48;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -914,7 +966,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"TheRacingLineWatch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 5D7DMNG452;
 				ENABLE_PREVIEWS = YES;
@@ -924,7 +976,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.40;
+				MARKETING_VERSION = 1.48;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -941,12 +993,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 5D7DMNG452;
 				IBSC_MODULE = TheRacingLineWatch_Extension;
 				INFOPLIST_FILE = TheRacingLineWatch/Info.plist;
-				MARKETING_VERSION = 1.40;
+				MARKETING_VERSION = 1.48;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -963,12 +1016,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 5D7DMNG452;
 				IBSC_MODULE = TheRacingLineWatch_Extension;
 				INFOPLIST_FILE = TheRacingLineWatch/Info.plist;
-				MARKETING_VERSION = 1.40;
+				MARKETING_VERSION = 1.48;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1101,19 +1155,21 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_ENTITLEMENTS = theracingline/theracingline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"theracingline/Preview Content\"";
 				DEVELOPMENT_TEAM = 5D7DMNG452;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = theracingline/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.40;
+				MARKETING_VERSION = 1.48;
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -1128,19 +1184,21 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_ENTITLEMENTS = theracingline/theracingline.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"theracingline/Preview Content\"";
 				DEVELOPMENT_TEAM = 5D7DMNG452;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = theracingline/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.40;
+				MARKETING_VERSION = 1.48;
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.daveellis.theracingline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;

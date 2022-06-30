@@ -18,15 +18,18 @@ struct ConfigureNotificationView: View {
         VStack {
             Picker(selection: $selected, label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/, content: {
                 Text("Series").tag(0)
-                Text("Notification Offset").tag(1)
+                Text("Sessions").tag(1)
+                Text("Offset").tag(2)
             }).pickerStyle(SegmentedPickerStyle())
             .padding()
             .onChange(of: selected, perform: { value in
-                data.menuHaptics()
+                data.simpleMenuHaptics()
             })
             if selected == 0 {
                 ConfigureNotificationSeriesView()
             } else if selected == 1 {
+                ConfigureNotificationSessionView()
+            } else if selected == 2 {
                 ConfigureNotificationTimeView()
             }
         }

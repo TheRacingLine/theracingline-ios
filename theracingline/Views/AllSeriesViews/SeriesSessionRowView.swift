@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct SeriesSessionRowView: View {
     
     @ObservedObject var data = DataController.shared
 
     var session: Session
+    var currentDate = Date()
     
     var body: some View {
         
@@ -52,13 +54,18 @@ struct SeriesSessionRowView: View {
                     } else {
                         if session.tba {
                             Text("\(session.day()) \(session.dateAsString()) - Time TBA")
+                        } else if session.durationType == "AD"{
+                            Text("\(session.day()) \(session.dateAsString())")
                         } else {
                             Text("\(session.day()) \(session.dateAsString()) - \(session.timeAsString())")
                         }
                     }
                     Spacer()
-                    if data.userAccessLevel > 2 {
+                    if data.userAccessLevel >= 3 && (session.durationType != "AD" || session.date > currentDate + 6.hours) {
                         Text(session.timeFromNow())
+                        Image(systemName: "clock.fill")
+                    } else if data.userAccessLevel >= 3 && (session.durationType == "AD" || session.date <= currentDate) {
+                        Text("All Day Event")
                         Image(systemName: "clock.fill")
                     }
                 } // HStack
@@ -75,5 +82,10 @@ struct SeriesSessionRowView_Previews: PreviewProvider {
         SeriesSessionRowView(session: testSession1)
             .previewLayout(.sizeThatFits)
             .padding()
+            .frame(height: 100)
+        SeriesSessionRowView(session: testSession8)
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .frame(height: 100)
     }
 }

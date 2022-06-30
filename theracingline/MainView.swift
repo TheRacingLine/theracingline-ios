@@ -30,8 +30,8 @@ struct MainView: View {
         
         if !isOnboarding {
             
-            // iPhone layout
             if horizontalSizeClass == .compact{
+                // iPhone layout
                 theracinglineHomeView(storeManager: storeManager)
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         toForeground()
@@ -45,6 +45,7 @@ struct MainView: View {
                         notifications.rebuildNotifications()
                     })
             } else {
+                // iPad layout
                 theracinglineSideBarView(storeManager: storeManager)
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         toForeground()
@@ -104,6 +105,9 @@ struct MainView: View {
         data.initiliseVisibleSeries()
         
         storeManager.restoreSubscriptionStatus()
+        
+        // load filter settings
+//        data.loadFilterStringSettings()
     }
     
     func toForeground() {

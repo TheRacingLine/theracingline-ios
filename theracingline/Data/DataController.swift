@@ -22,6 +22,29 @@ class DataController: ObservableObject {
     @Published var selectAllSeries: Bool = false
     @Published var delesctAllSeries: Bool = false
     @Published var notificationSound: String = "flyby_notification_no_bell.aiff"
+    
+    @Published var raceNotifications: Bool = true
+    @Published var qualNotifications: Bool = true
+    @Published var pracNotifications: Bool = true
+    
+    //@Published var filterSeriesType = "All"
+    @Published var filterSeriesSingleSeater = true
+    @Published var filterSeriesSportsCar = true
+    @Published var filterSeriesTouringCars = true
+    @Published var filterSeriesStockCars = true
+    @Published var filterSeriesRally = true
+    @Published var filterSeriesBikes = true
+    @Published var filterSeriesOther = true
+    
+    //@Published var filterSessionType = "All"
+    @Published var filterSessionRace = true
+    @Published var filterSessionQualifying = true
+    @Published var filterSessionPractice = true
+    @Published var filterStartDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())! - 1.weeks
+    @Published var filterEndDate = Date() + 2.years
+    
+    // Removed until multiple notification offsets are supported
+    
 //    @Published var notificationOffset1: Int = 0
 //    @Published var notificationOffset2: Int = 0
 
@@ -35,7 +58,7 @@ class DataController: ObservableObject {
         let todayAlmostMidnight = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: today)!  + minutesToGMT.minutes
         let tomorrowFourAM = todayAlmostMidnight + 4.hours + 30.minutes
         
-        return sessions.filter { ($0.dateInTimeZone() >= todayMidnight && $0.dateInTimeZone() < tomorrowFourAM) && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
+        return sessions.filter { ($0.dateInTimeZone() >= todayMidnight && $0.dateInTimeZone() < tomorrowFourAM) && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel && (isSeriesFiltered(seriesType: $0.seriesType)) && (isSessionFiltered(sessionType: $0.sessionType)) && ($0.date >= filterStartDate && $0.date <= filterEndDate)}.sorted { $0.date < $1.date }
     }
     
     // get this weeks events
@@ -57,14 +80,69 @@ class DataController: ObservableObject {
         let nextSunday = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: nextSundayDay)! + minutesToGMT.minutes  + 4.hours + 30.minutes
         let lastSunday = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: lastSundayDay)! + minutesToGMT.minutes
         
-        return sessions.filter { $0.dateInTimeZone() <= nextSunday && $0.dateInTimeZone() >= lastSunday && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
+        return sessions.filter { $0.dateInTimeZone() <= nextSunday && $0.dateInTimeZone() >= lastSunday && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel && (isSeriesFiltered(seriesType: $0.seriesType)) && (isSessionFiltered(sessionType: $0.sessionType)) && ($0.date >= filterStartDate && $0.date <= filterEndDate)}.sorted { $0.date < $1.date }
+    }
+    
+    // get last weeks events
+    var lastWeekSessions: [Session] {
         
+        let seconds = TimeZone.current.secondsFromGMT()
+        let minutesToGMT = (seconds / 60) + (seconds % 60)
+        
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        let nextSundayDay: Date
+        
+        if weekday == 1 {
+            nextSundayDay = Date()
+        } else {
+            nextSundayDay = Date().dateAt(.nextWeekday(.sunday))
+        }
+                
+        let lastSundayDay = nextSundayDay - 6.days
+        let lastlastSundayDay = lastSundayDay - 6.days
+        
+        let nextSunday = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: nextSundayDay)! + minutesToGMT.minutes  + 4.hours + 30.minutes
+        let lastSunday = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: lastSundayDay)! + minutesToGMT.minutes
+        let lastlastSunday = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: lastlastSundayDay)! + minutesToGMT.minutes
+        
+        return sessions.filter { $0.dateInTimeZone() <= lastSunday && $0.dateInTimeZone() >= lastlastSunday && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel }.sorted { $0.date < $1.date }
+    }
+    
+    // get next weeks events
+    var nextWeekSessions: [Session] {
+        
+        let seconds = TimeZone.current.secondsFromGMT()
+        let minutesToGMT = (seconds / 60) + (seconds % 60)
+        
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        let nextSundayDay: Date
+        
+        if weekday == 1 {
+            nextSundayDay = Date()
+        } else {
+            nextSundayDay = Date().dateAt(.nextWeekday(.sunday))
+        }
+                
+        let lastSundayDay = nextSundayDay - 6.days
+        let nextnextSundayDay = nextSundayDay + 8.days
+        
+        let nextSunday = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: nextSundayDay)! + minutesToGMT.minutes  + 4.hours + 30.minutes
+        let lastSunday = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: lastSundayDay)! + minutesToGMT.minutes
+        let nextnextSunday = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: nextnextSundayDay)! + minutesToGMT.minutes
+        
+        return sessions.filter { $0.dateInTimeZone() <= nextnextSunday && $0.dateInTimeZone() >= nextSunday && visibleSeries.contains($0.series) && $0.accessLevel <= userAccessLevel && (isSeriesFiltered(seriesType: $0.seriesType)) && (isSessionFiltered(sessionType: $0.sessionType)) && ($0.date >= filterStartDate && $0.date <= filterEndDate)}.sorted { $0.date < $1.date }
     }
 
     var allSessions: [Session] {
         
         let today = Date()
-        return sessions.filter { $0.date >= today && visibleSeries.contains($0.series) }.sorted { $0.date < $1.date }
+        return sessions.filter { $0.date >= today && visibleSeries.contains($0.series) && (isSeriesFiltered(seriesType: $0.seriesType)) && (isSessionFiltered(sessionType: $0.sessionType)) && ($0.date >= filterStartDate && $0.date <= filterEndDate)}.sorted { $0.date < $1.date }
+    }
+    
+    var allSessionsNoFilter: [Session] {
+        
+        let today = Date()
+        return sessions.filter { $0.date >= today && visibleSeries.contains($0.series)}.sorted { $0.date < $1.date }
     }
     
     var currentDate: String {
@@ -76,7 +154,7 @@ class DataController: ObservableObject {
         return day
     }
     
-    // MARK:- Session Data Controllers
+    // MARK: - Session Data Controllers
     
     func saveData() {
         
@@ -113,8 +191,6 @@ class DataController: ObservableObject {
         }
     }
     
-    
-    
     func getNewSessions() {
         let key = jsonbinsKey
         
@@ -127,7 +203,7 @@ class DataController: ObservableObject {
                 if let webData = data {
 
                     if let json = try? JSONSerialization.jsonObject(with: webData, options: []) as? [[String:String]]{
-                        print(json)
+//                        print(json)
                         var downloadedSessions: [Session] = []
                         
                         for jsonSession in json {
@@ -231,7 +307,7 @@ class DataController: ObservableObject {
         }
     }
     
-    // MARK:- Series Data Controllers
+    // MARK: - Series Data Controllers
     
     func getSeriesList() {
         let key = jsonbinsKey
@@ -315,7 +391,7 @@ class DataController: ObservableObject {
         }
     }
     
-    // MARK:- AccessLevel Data Controllers
+    // MARK: - AccessLevel Data Controllers
     
     func setUserAccessLevel(newAccessLevel: Int) {
         DispatchQueue.global().async {
@@ -338,7 +414,6 @@ class DataController: ObservableObject {
                     let decoder = JSONDecoder()
                     if let jsonUserAccessLevel = try? decoder.decode(Int.self, from: data) {
                         DispatchQueue.main.async{
-//                            print(jsonUserAccessLevel)
                             self.userAccessLevel = jsonUserAccessLevel
                         }
                     }
@@ -402,15 +477,25 @@ class DataController: ObservableObject {
     func getNotificationPreferences(){
         // load each time the array is updated
         // load before building the notification
-        
+
         DispatchQueue.global().async {
-            
             if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
                 if let data = defaults.data(forKey: "notificationPreferences"){
                     let decoder = JSONDecoder()
                     if let jsonSeriesList = try? decoder.decode([String].self, from: data) {
                         DispatchQueue.main.async{
                             self.seriesWithNotifications = jsonSeriesList
+                        }
+                    }
+                }
+                
+                if let data = defaults.data(forKey: "sessionNotificationPreferences"){
+                    let decoder = JSONDecoder()
+                    if let jsonSeriesSessionList = try? decoder.decode([Bool].self, from: data) {
+                        DispatchQueue.main.async{
+                            self.raceNotifications = jsonSeriesSessionList[0]
+                            self.qualNotifications = jsonSeriesSessionList[1]
+                            self.pracNotifications = jsonSeriesSessionList[2]
                         }
                     }
                 }
@@ -438,6 +523,13 @@ class DataController: ObservableObject {
                     defaults.set(encoded, forKey: "notificationPreferences")
                     defaults.synchronize() // MAYBE DO NOT NEED
                 }
+                
+                let sessionSettings = [self.raceNotifications, self.qualNotifications, self.pracNotifications]
+                
+                if let encoded = try? encoder.encode(sessionSettings) {
+                    defaults.set(encoded, forKey: "sessionNotificationPreferences")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                }
             }
             
         }
@@ -450,6 +542,33 @@ class DataController: ObservableObject {
     func selectNoneNotificationsSeries(){
         self.seriesWithNotifications = []
     }
+    
+    // SESSIONS
+    
+    func getRaceNotificationSetting() -> Bool {
+        return raceNotifications
+    }
+    
+    func getQualNotificationSetting() -> Bool{
+        return qualNotifications
+    }
+    
+    func getPracNotificationSetting() -> Bool{
+        return pracNotifications
+    }
+    
+    func setRaceNotificationSetting(setting: Bool) {
+        self.raceNotifications = setting
+    }
+    
+    func setQualNotificationSetting(setting: Bool) {
+        self.qualNotifications = setting
+    }
+    
+    func setPracNotificationSetting(setting: Bool) {
+        self.pracNotifications = setting
+    }
+    
     
     // MARK: - Series List Preferences
     
@@ -503,7 +622,7 @@ class DataController: ObservableObject {
         self.visibleSeries = []
     }
     
-    // MARK:- Sound Data Controllers
+    // MARK: - Sound Data Controllers
     
     func setNotificationSound(sound: String) {
         DispatchQueue.global().async {
@@ -541,7 +660,12 @@ class DataController: ObservableObject {
         generator.notificationOccurred(.success)
     }
     
-    // MARK:- Widget Data Controllers
+    func simpleMenuHaptics() {
+        let impactLight = UIImpactFeedbackGenerator(style: .light)
+        impactLight.impactOccurred()
+    }
+    
+    // MARK: - Widget Data Controllers
     
     func getRacesForWidget() -> [Session]{
         if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
@@ -554,6 +678,7 @@ class DataController: ObservableObject {
                     
                     let weekday = Calendar.current.component(.weekday, from: Date())
                     let nextSundayDay: Date
+                    let startOfTodayDay = Date()
                     
                     if weekday == 1 {
                         nextSundayDay = Date()
@@ -563,9 +688,12 @@ class DataController: ObservableObject {
 
                     let nextSunday = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: nextSundayDay)! + minutesToGMT.minutes  + 4.hours + 30.minutes
                     
+                    let startOfToday = Calendar.current.date(bySettingHour: 0, minute: 0, second: 1, of: startOfTodayDay)!
+                    
                     let now = Date()
                     
-                    return jsonSessions.filter { $0.date < nextSunday && $0.date >= now }.sorted { $0.date < $1.date }
+                    return jsonSessions.filter { ($0.date < nextSunday && $0.date >= now) || ($0.durationType == "AD" && $0.date < nextSunday && $0.date >= startOfToday) }.sorted { $0.date < $1.date }
+//                    return jsonSessions.filter { ($0.durationType == "AD" && $0.date < nextSunday && $0.date >= startOfToday) }.sorted { $0.date < $1.date }
                 }
             }
         }
@@ -596,5 +724,275 @@ class DataController: ObservableObject {
         }
         return []
     }
+    
+    // MARK: - Filter Controllers
+    
+    func saveFilterStringSettings(){
+        // run each time the array is updated
+        print("Save filters called")
+
+        
+        // let filterStringSettings = [self.filterSeriesType, self.filterSessionType]
+        let filterSeriesSettings = [self.filterSeriesSingleSeater, self.filterSeriesSportsCar, self.filterSeriesTouringCars, self.filterSeriesStockCars, self.filterSeriesRally, self.filterSeriesBikes, self.filterSeriesOther]
+        let filterSessionSettings = [self.filterSessionPractice, self.filterSessionQualifying, self.filterSessionRace]
+        DispatchQueue.global().async {
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(filterSeriesSettings) {
+                    defaults.set(encoded, forKey: "filterSeriesSettings")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                }
+                
+                if let encoded = try? encoder.encode(filterSessionSettings) {
+                    defaults.set(encoded, forKey: "filterSessionSettings")
+                    defaults.synchronize() // MAYBE DO NOT NEED
+                }
+                UserDefaults.standard.set(self.filterStartDate.timeIntervalSince1970, forKey: "filterStartDate")
+                UserDefaults.standard.set(self.filterEndDate.timeIntervalSince1970, forKey: "filterEndDate")
+            }
+        }
+    }
+    
+    func loadFilterStringSettings(){
+        // load each time the array is updated
+                
+        DispatchQueue.global().async {
+            
+            if let defaults = UserDefaults(suiteName: "group.dev.daveellis.theracingline") {
+                
+                // SERIES SETTINGS
+                if let data = defaults.data(forKey: "filterSeriesSettings"){
+                    let decoder = JSONDecoder()
+                    if let jsonfilterStringList = try? decoder.decode([Bool].self, from: data) {
+                        DispatchQueue.main.async{
+                            self.filterSeriesSingleSeater = jsonfilterStringList[0]
+                            self.filterSeriesSportsCar = jsonfilterStringList[1]
+                            self.filterSeriesTouringCars = jsonfilterStringList[2]
+                            self.filterSeriesStockCars = jsonfilterStringList[3]
+                            self.filterSeriesRally = jsonfilterStringList[4]
+                            self.filterSeriesBikes = jsonfilterStringList[5]
+                            self.filterSeriesOther = jsonfilterStringList[6]
+                        }
+                    }
+                }
+                
+                // SESSION SETTINGS
+                if let data = defaults.data(forKey: "filterSessionSettings"){
+                    let decoder = JSONDecoder()
+                    if let jsonfilterStringList = try? decoder.decode([Bool].self, from: data) {
+                        DispatchQueue.main.async{
+                            self.filterSessionPractice = jsonfilterStringList[0]
+                            self.filterSessionQualifying = jsonfilterStringList[1]
+                            self.filterSessionRace = jsonfilterStringList[2]
+                        }
+                    }
+                }
+                
+                // DATES
+                DispatchQueue.main.async{
+                    print("Load filter datez --------------")
+
+                    self.filterStartDate = Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: "filterStartDate"))
+                    self.filterEndDate = Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: "filterEndDate"))
+                }
+            }
+        }
+    }
+    
+    // CHECKERS
+    
+    func isSeriesFiltered(seriesType: String) -> Bool {
+        switch seriesType {
+        case "Single Seater":
+            if self.filterSeriesSingleSeater == true {
+                return true
+            } else {
+                return false
+            }
+            
+        case "Sportscars":
+            if self.filterSeriesSportsCar == true {
+                return true
+            } else {
+                return false
+            }
+            
+        case "Touring Cars":
+            if self.filterSeriesTouringCars == true {
+                return true
+            } else {
+                return false
+            }
+            
+        case "Stock Cars":
+            if self.filterSeriesStockCars == true {
+                return true
+            } else {
+                return false
+            }
+
+        case "Other":
+            if self.filterSeriesOther == true {
+                return true
+            } else {
+                return false
+            }
+
+        case "Rally":
+            if self.filterSeriesRally == true {
+                return true
+            } else {
+                return false
+            }
+
+        case "Bikes":
+            if self.filterSeriesBikes == true {
+                return true
+            } else {
+                return false
+            }
+        
+        default:
+            return false
+        }
+    }
+    
+    func isSessionFiltered(sessionType: String) -> Bool {
+        switch sessionType {
+        case "P":
+            if self.filterSessionPractice == true {
+                return true
+            } else {
+                return false
+            }
+
+        case "Q":
+            if self.filterSessionQualifying == true {
+                return true
+            } else {
+                return false
+            }
+
+        case "R":
+            if self.filterSessionRace == true {
+                return true
+            } else {
+                return false
+            }
+            
+        default:
+            return false
+        }
+    }
+    
+    // GETTERS
+    
+    func getSingleSeaterFilter() -> Bool {
+        return self.filterSeriesSingleSeater
+    }
+    
+    func getSportsCarFilter() -> Bool {
+        return self.filterSeriesSportsCar
+    }
+    
+    func getTouringCarsFilter() -> Bool {
+        return self.filterSeriesTouringCars
+    }
+    
+    func getStockCarsFilter() -> Bool {
+        return self.filterSeriesStockCars
+    }
+    
+    func getRallyFilter() -> Bool {
+        return self.filterSeriesRally
+    }
+    
+    func getBikesFilter() -> Bool {
+        return self.filterSeriesBikes
+    }
+    
+    func getOtherFilter() -> Bool {
+        return self.filterSeriesOther
+    }
+    
+    func getFilterStartDate() -> Date {
+        return self.filterStartDate
+    }
+    
+    func getFilterEndDate() -> Date {
+        return self.filterEndDate
+    }
+    
+    func getPracticeFilter() -> Bool {
+        return self.filterSessionPractice
+    }
+    
+    func getQualifyingFilter() -> Bool {
+        return self.filterSessionQualifying
+    }
+    
+    func getRaceFilter() -> Bool {
+        return self.filterSessionRace
+    }
+    
+    // SETTERS
+    
+    func setSingleSeaterFilter(setting: Bool) {
+        self.filterSeriesSingleSeater = setting
+    }
+    
+    func setSportsCarFilter(setting: Bool) {
+        self.filterSeriesSportsCar = setting
+    }
+    
+    func setTouringCarsFilter(setting: Bool) {
+        self.filterSeriesTouringCars = setting
+    }
+    
+    func setStockCarsFilter(setting: Bool) {
+        self.filterSeriesStockCars = setting
+    }
+    
+    func setRallyFilter(setting: Bool) {
+        self.filterSeriesRally = setting
+    }
+    
+    func setBikesFilter(setting: Bool) {
+        self.filterSeriesBikes = setting
+    }
+    
+    func setOtherFilter(setting: Bool) {
+        self.filterSeriesOther = setting
+    }
+    
+    func setPracticeFilter(setting: Bool) {
+        self.filterSessionPractice = setting
+    }
+    
+    func setQualifyingFilter(setting: Bool) {
+        self.filterSessionQualifying = setting
+    }
+    
+    func setRaceFilter(setting: Bool) {
+        self.filterSessionRace = setting
+    }
+    
+    func setFilterStartDate(date: Date) {
+        self.filterStartDate = date
+    }
+    
+    func setFilterEndDate(date: Date) {
+        self.filterEndDate = date
+    }
+    
+    
+    
+    
+//    func getFilterStringSettings() -> [String]{
+//        
+//        return [self.filterText, self.filterSeriesTypes, self.filterSessionType]
+//    }
 }
 

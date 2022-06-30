@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SettingsListView: View {
     
     @StateObject var storeManager: StoreManager
+    @State private var showingAlert = false
     @ObservedObject var data = DataController.shared
     
     var body: some View {
@@ -31,16 +33,45 @@ struct SettingsListView: View {
                     }
                 } //GROUPBOX
                 
-                GroupBox(label: SettingsLabelView(labelText: "Subscribe", labelImage: "flag")) {
-                    Divider().padding(.vertical, 4)
-                    SettingsDescriptionView(text: "Subscribe for more series, race start times, start notifications and to remove ads.")
+                if Reachability.isConnectedToNetwork(){
+                    GroupBox(label: SettingsLabelView(labelText: "TRL Premium", labelImage: "flag")) {
+                        Divider().padding(.vertical, 4)
+                        SettingsDescriptionView(text: "Subscribe for race start times and session notifications in your time zone.")
+                        Divider().padding(.vertical, 4)
 
-                    Divider().padding(.vertical, 4)
+                        if storeManager.monthlySub == true || storeManager.annualSub == true {
+                            VStack {
+                                Text("Subscribed")
+                                    .foregroundColor(.green)
+                                    .fontWeight(.bold)
+                                    .padding(10.0)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10.0)
+                                            .stroke(lineWidth: 2.0))
+                                            .foregroundColor(.green)
+                                Text("Thank You")
+                                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                    .font(.caption)
+                                    .foregroundColor(.green)
+                                    .padding(.vertical, 10)
+                            }
+                        } else {
+                            SubscriptionOptions(storeManager: storeManager)
+                        }
                     
-                    NavigationLink(destination: SubscriptionLevelView(storeManager: storeManager)) {
-                        SettingsRowView(content: "Subscription Options", symbol: "chevron.right")
-                    }
-                } //GROUPBOX
+                        Divider().padding(.vertical, 4)
+                        
+                        NavigationLink(destination: SubscriptionLevelView(storeManager: storeManager)) {
+                            SettingsRowView(content: "TRL Premium Options", symbol: "chevron.right")
+                        }
+                    } //GROUPBOX
+                } else {
+                    GroupBox(label: SettingsLabelView(labelText: "TRL Premium", labelImage: "flag")) {
+                        Divider().padding(.vertical, 4)
+                            Text("Subscribing requires an internet connection. Please ensure you are online, and that the app has access to the Wifi or Mobile/Cellular data connection and try again.")
+                                .font(.footnote)
+                    } //GROUPBOX
+                }
                 
 
                 GroupBox(label: SettingsLabelView(labelText: "Settings", labelImage: "app.badge")) {
@@ -149,11 +180,6 @@ struct SettingsListView: View {
                     Link(destination: URL(string: "https://www.youtube.com/c/GregzVR/featured")!) {
                         SettingsLinkView(content: "GregzVR VR Sim Racing", symbol: "arrow.up.right.square", linkDestination: "youtube.com/c/GregzVR/featured")
                     }
-                    Divider().padding(.vertical, 4)
-                    
-                    Link(destination: URL(string: "https://theracingline.net")!) {
-                        SettingsLinkView(content: "theRACINGLINE.net", symbol: "arrow.up.right.square", linkDestination: "theracingline.net")
-                    }
                 } //GROUPBOX
 
                 GroupBox(label: SettingsLabelView(labelText: "Privacy Policy", labelImage: "lock")) {
@@ -172,29 +198,42 @@ struct SettingsListView: View {
                         SettingsRowView(content: "Terms & Conditions", symbol: "chevron.right")
                     }
                 } //GROUPBOX
-                
-                GroupBox(label: SettingsLabelView(labelText: "Version", labelImage: "gearshape.fill")) {
+                Group {
                     
-                    Divider().padding(.vertical, 4)
+                    GroupBox(label: SettingsLabelView(labelText: "Version", labelImage: "gearshape.fill")) {
+                        
+                        Divider().padding(.vertical, 4)
 
-                    SettingsDescriptionView(text: "Version 1.40", useBlack: true)
-                } //GROUPBOX
+                        SettingsDescriptionView(text: "Version 1.48", useBlack: true)
+                    } //GROUPBOX
                 
-//                GroupBox(label: SettingsLabelView(labelText: "Beta Testing Settings", labelImage: "gearshape.2")) {
-//                    Divider().padding(.vertical, 4)
-//                    SettingsDescriptionView(text: "Settings useful for beta testing the app. Have a play around with these and see if it works as expected.")
-//                    
-//                    Divider().padding(.vertical, 4)
-//                    
-//                    NavigationLink(destination: BetaTestSettingsView()) {
-//                        SettingsRowView(content: "Beta Settings", symbol: "chevron.right")
-//                        
-//                    }
-//                } //GROUPBOX
+                
+//                    GroupBox(label: SettingsLabelView(labelText: "Beta Testing Settings", labelImage: "gearshape.2")) {
+//                        Divider().padding(.vertical, 4)
+//                        SettingsDescriptionView(text: "Settings useful for beta testing the app. Have a play around with these and see if it works as expected.")
+//
+//                        Divider().padding(.vertical, 4)
+//
+//                        NavigationLink(destination: BetaTestSettingsView()) {
+//                            SettingsRowView(content: "Beta Settings", symbol: "chevron.right")
+//
+//                        }
+//                    } //GROUPBOX
+                } // GROUP
                 
             } // VSTACK
             .padding()
         } // SCROLLVIEW
+    }
+    
+    func getSubLevel(subLevel: String) -> SKProduct {
+        let subscription = self.storeManager.myProducts.filter { $0.productIdentifier.contains(subLevel) }.first
+        if subscription != nil {
+            return subscription!
+        } else {
+            print(storeManager.myProducts)
+            return storeManager.myProducts[0]
+        }
     }
 }
 

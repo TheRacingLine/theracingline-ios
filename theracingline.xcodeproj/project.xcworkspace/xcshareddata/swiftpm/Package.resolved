@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/malcommac/SwiftDate.git",
         "state": {
           "branch": null,
-          "revision": "a25913b19833860b61fac161a706e44834f03c47",
-          "version": "6.2.0"
+          "revision": "6190d0cefff3013e77ed567e6b074f324e5c5bf5",
+          "version": "6.3.1"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/tikhop/TPInAppReceipt.git",
         "state": {
           "branch": null,
-          "revision": "76d6b60deae717422cbae80ecd2be099c129818a",
-          "version": "3.0.2"
+          "revision": "695f0db9a790c8c62d5335728877059851ffd912",
+          "version": "3.2.1"
         }
       }
     ]

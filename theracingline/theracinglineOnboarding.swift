@@ -52,7 +52,7 @@ struct theracinglineOnboarding: View {
                 HStack(alignment: .center) {
                     Text("More coming soon...".uppercased()).font(.footnote).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }.padding(.horizontal, 40)
-                .padding(.vertical, 20)
+                .padding(.vertical, 10)
                 .foregroundColor(Color.white)
                 // BUTTON
                 

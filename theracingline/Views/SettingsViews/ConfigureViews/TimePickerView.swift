@@ -29,36 +29,51 @@ struct TimePickerView: View {
             VStack{
                 HStack {
                     Spacer()
-                    Picker(selection: self.$selectedDays, label: Text("Days")) {
-                        ForEach(0..<self.days.count) { day in
-                            Text("\(day)")
+                    Group {
+                        Picker(selection: self.$selectedDays, label: Text("Days")) {
+                            ForEach(0..<self.days.count) { day in
+                                Text("\(day)")
+                            }
+                        }.onAppear(){
+                            self.selectedDays = notifications.getNotificatimeTimeDays(notificationNumber: notificationSelector)
                         }
-                    }.onAppear(){
-                        self.selectedDays = notifications.getNotificatimeTimeDays(notificationNumber: notificationSelector)
+                        .pickerStyle(.wheel)
+                        .frame(width: geometry.size.width / CGFloat(3.5), height: geometry.size.height)
+                        .clipped()
+                        .compositingGroup()
+
                     }
-                    .pickerStyle(WheelPickerStyle())
-                    .frame(width: geometry.size.width / CGFloat(3.5), height: geometry.size.height)
-                    .clipped()
-                    Picker(selection: self.$selectedHours, label: Text("Hours")) {
-                        ForEach(0..<self.hours.count) { hour in
-                            Text("\(hour)")
+                    
+                    Group {
+                        Picker(selection: self.$selectedHours, label: Text("Hours")) {
+                            ForEach(0..<self.hours.count) { hour in
+                                Text("\(hour)")
+                            }
+                        }.onAppear(){
+                            self.selectedHours = notifications.getNotificatimeTimeHours(notificationNumber: notificationSelector)
                         }
-                    }.onAppear(){
-                        self.selectedHours = notifications.getNotificatimeTimeHours(notificationNumber: notificationSelector)
+                        .pickerStyle(.wheel)
+                        .frame(width: geometry.size.width / CGFloat(3.5), height: geometry.size.height)
+                        .clipped()
+                        .compositingGroup()
+
                     }
-                    .pickerStyle(WheelPickerStyle())
-                    .frame(width: geometry.size.width / CGFloat(3.5), height: geometry.size.height)
-                    .clipped()
-                    Picker(selection: self.$selectedMinutes, label: Text("Minutes")) {
-                        ForEach(0..<self.minutes.count) { minute in
-                            Text("\(minute)")
+                    
+                    Group {
+                        Picker(selection: self.$selectedMinutes, label: Text("Minutes")) {
+                            ForEach(0..<self.minutes.count) { minute in
+                                Text("\(minute)")
+                            }
+                        }.onAppear(){
+                            self.selectedMinutes = notifications.getNotificatimeTimeMinutes(notificationNumber: notificationSelector)
                         }
-                    }.onAppear(){
-                        self.selectedMinutes = notifications.getNotificatimeTimeMinutes(notificationNumber: notificationSelector)
+                        .pickerStyle(.wheel)
+                        .frame(width: geometry.size.width / CGFloat(3.5), height: geometry.size.height)
+                        .clipped()
+                        .compositingGroup()
+
                     }
-                    .pickerStyle(WheelPickerStyle())
-                    .frame(width: geometry.size.width / CGFloat(3.5), height: geometry.size.height)
-                    .clipped()
+                    
                     Spacer()
                 }
                 Button(action: {
@@ -84,3 +99,5 @@ struct TimePickerView_Previews: PreviewProvider {
         TimePickerView(notificationSelector: 1)
     }
 }
+
+extension UIPickerView {   open override var intrinsicContentSize: CGSize {     return CGSize(width: UIView.noIntrinsicMetric , height: 150)   } }

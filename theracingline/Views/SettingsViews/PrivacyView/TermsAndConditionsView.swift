@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TermsAndConditionsView: View {
+    
+    @StateObject var vm = ScrollToModel()
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -98,4 +101,12 @@ struct TermsAndConditionsView_Previews: PreviewProvider {
     static var previews: some View {
         TermsAndConditionsView()
     }
+}
+
+class ScrollToModel: ObservableObject {
+    enum Action {
+        case end
+        case top
+    }
+    @Published var direction: Action? = nil
 }

@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct SeriesRowView: View {
     
     @ObservedObject var data = DataController.shared
 
     var seriesSessions: [Session]
+    var currentDate = Date()
     
     var body: some View {
         
@@ -40,6 +42,10 @@ struct SeriesRowView: View {
                         Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) - TBA Distance")
                             .font(.caption)
                             .foregroundColor(Color.secondary)
+                    } else if seriesSessions[0].durationType == "AD"{
+                        Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].getDurationText())")
+                            .font(.caption)
+                            .foregroundColor(Color.secondary)
                     } else {
                         Text("\(seriesSessions[0].circuit) - \(seriesSessions[0].sessionName) \(seriesSessions[0].getDurationText())")
                             .font(.caption)
@@ -53,16 +59,23 @@ struct SeriesRowView: View {
                     } else {
                         if seriesSessions[0].tba {
                             Text("\(seriesSessions[0].day()) \(seriesSessions[0].dateAsString()) - Time TBA")
+                        } else if seriesSessions[0].durationType == "AD"{
+                            Text("\(seriesSessions[0].day()) \(seriesSessions[0].dateAsString())")
                         } else {
                             Text("\(seriesSessions[0].day()) \(seriesSessions[0].dateAsString()) - \(seriesSessions[0].timeAsString())")
                         }
                         
                     }
                     Spacer()
-                    if data.userAccessLevel > 2 {
+                    if data.userAccessLevel >= 3 && (seriesSessions[0].durationType != "AD" || seriesSessions[0].date > currentDate + 6.hours) {
                         Text(seriesSessions[0].timeFromNow())
                         Image(systemName: "clock.fill")
+                    } else if data.userAccessLevel >= 3 && (seriesSessions[0].durationType == "AD" || seriesSessions[0].date <= currentDate) {
+                        Text("All Day Event")
+                        Image(systemName: "clock.fill")
                     }
+                    
+                    
                 } // HStack
                 .font(.caption)
                 .foregroundColor(Color.secondary)
@@ -77,5 +90,10 @@ struct SeriesRowView_Previews: PreviewProvider {
         SeriesRowView(seriesSessions: [testSession1,testSession2,testSession3,testSession4])
             .previewLayout(.sizeThatFits)
             .padding()
+            .frame(height: 100)
+        SeriesRowView(seriesSessions: [testSession8,testSession2,testSession3,testSession4])
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .frame(height: 100)
     }
 }

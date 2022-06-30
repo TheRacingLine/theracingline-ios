@@ -18,7 +18,7 @@ struct SubscriptionLevelView: View {
     var body: some View {
         ScrollView{
             VStack {
-                GroupBox(label: SettingsLabelView(labelText: "Subscription  🥇", labelImage: " ")) {
+                GroupBox(label: SettingsLabelView(labelText: "TRL Premium  🥇", labelImage: " ")) {
                     Divider().padding(.vertical, 4)
                     SubscriptionLevelList(text: "Features added:", list: ["Race dates for all series", "Race start times added for all series", "Configurable notifications added for all races"])
 
@@ -28,12 +28,16 @@ struct SubscriptionLevelView: View {
                     }
                     Divider().padding(.vertical, 4)
                     
-                    
-                    Text("Monthly")
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    
-                    Text("Auto renews")
-                        .font(.caption)
+                    Group {
+                        Text("Monthly")
+                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        Text("One Month Free Trial")
+                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                            .font(.caption)
+                            .foregroundColor(.green)
+                        Text("Auto renews")
+                            .font(.caption)
+                    }
                     
                     // MARK:- Monthly Syubscription Button
                     Group {
@@ -74,6 +78,10 @@ struct SubscriptionLevelView: View {
                         
                         Text("Annual")
                             .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        Text("One Month Free Trial")
+                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                            .font(.caption)
+                            .foregroundColor(.green)
                         Text("2 Months Free")
                             .font(.caption)
                         Text("Auto renews")
@@ -121,7 +129,7 @@ struct SubscriptionLevelView: View {
             } //VSTACK
             .padding(.horizontal, 20)
             .padding(.bottom, 20)
-            .navigationBarTitle("Subscriptions")
+            .navigationBarTitle("TRL Premium")
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {

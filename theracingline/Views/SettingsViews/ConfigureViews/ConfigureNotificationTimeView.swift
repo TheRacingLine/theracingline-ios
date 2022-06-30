@@ -38,7 +38,8 @@ struct ConfigureNotificationTimeView: View {
             }.padding(.bottom, 50)
 
             Spacer()
-        }
+        }.navigationBarTitle("Notifications")
+
     }
 }
 

@@ -60,7 +60,11 @@ class NotificationController: ObservableObject {
     func filterSeriesByPreferences(sessions: [Session]) -> [Session] {
         let seriesWithNotifications = data.seriesWithNotifications
         
-        return sessions.filter { seriesWithNotifications.contains($0.series) && $0.tba == false }
+        let raceNotifications = data.getRaceNotificationSetting()
+        let qualNotifications = data.getQualNotificationSetting()
+        let pracNotifications = data.getPracNotificationSetting()
+        
+        return sessions.filter { seriesWithNotifications.contains($0.series) && $0.tba == false && (($0.sessionType == "P" && pracNotifications) || ($0.sessionType == "Q" && qualNotifications) || ($0.sessionType == "R" && raceNotifications)) }
     }
     
     func setReminderNotificaton() {
@@ -114,13 +118,16 @@ class NotificationController: ObservableObject {
         let secondsUntilNotification = secondsBetweenNowAndRace - timeOffset
         
         if secondsUntilNotification > 0 {
-            let messageString = buildNotificationTimeString()
+            let messageString = buildNotificationTimeString(session: session)
             
             let content = UNMutableNotificationContent()
             content.title = session.series
             content.subtitle = "\(session.circuit) - \(session.sessionName)"
             content.body = messageString
             content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: data.notificationSound))
+            if #available(iOS 15.0, *) {
+                content.interruptionLevel = .timeSensitive
+            }
             
 //            print(content.title)
 //            print(content.subtitle)
@@ -257,7 +264,7 @@ class NotificationController: ObservableObject {
         return 0
     }
     
-    func buildNotificationTimeString() -> String {
+    func buildNotificationTimeString(session: Session) -> String {
         
         var daysString = ""
         var hoursString = ""
@@ -266,7 +273,17 @@ class NotificationController: ObservableObject {
         let days = getNotificatimeTimeDays(notificationNumber: 1)
         let hours = getNotificatimeTimeHours(notificationNumber: 1)
         let minutes = getNotificatimeTimeMinutes(notificationNumber: 1)
-
+        
+        if session.durationType == "AD" {
+            if days < 1 {
+                return "Event begins today"
+            } else if days < 2 {
+                return "Event begins tomorrow"
+            } else {
+                return "Event begins in \(days) days."
+            }
+        }
+        
         if days != 0 {
             if days == 1 {
                 daysString = "\(days) day "

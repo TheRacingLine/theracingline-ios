@@ -61,8 +61,16 @@ class PhoneToWatchDataController: NSObject, WCSessionDelegate {
             if let data = defaults.data(forKey: "sessions"){
                 let decoder = JSONDecoder()
                 if let jsonSessions = try? decoder.decode([Session].self, from: data) {
+                    
+                   
+                    if(dataCont.userAccessLevel < 3) {
+                        jsonSessions.forEach { session in
+                            session.accessLevel = -1
+                        }
+                    }
+                    
                     DispatchQueue.main.async{
-                        replyHandler(self.convertSessionsToContext(sessions: jsonSessions.filter { $0.accessLevel <= self.dataCont.userAccessLevel && self.dataCont.visibleSeries.contains($0.series) }))
+                        replyHandler(self.convertSessionsToContext(sessions: jsonSessions.filter { self.dataCont.visibleSeries.contains($0.series) }))
                     }
                 }
             }
